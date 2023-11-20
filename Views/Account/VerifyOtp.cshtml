@@ -1,0 +1,23 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "VerifyingOtp";
+}
+@model VerifyOtpViewModel
+
+<h2>Verify OTP</h2>
+
+<p>An OTP has been sent to your phone. Please enter the OTP to complete registration.</p>
+
+<form asp-action="VerifyOtp" method="post">
+    <div class="form-group">
+        <label asp-for="UserEnteredOtp">Enter OTP:</label>
+        <input asp-for="UserEnteredOtp" class="form-control" />
+        <span asp-validation-for="UserEnteredOtp" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="GeneratedOtp" />
+
+    <button type="submit" class="btn btn-primary">Verify OTP</button>
+</form>

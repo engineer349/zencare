@@ -1,0 +1,104 @@
+﻿@model Zencareservice.Models.Signup;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Register";
+    Layout = "";
+}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up </title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="~/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="~/css/loginstyle.css">
+</head>
+<body>
+    <div class="main">
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h2 class="form-title">Sign up</h2>
+                        <form method="POST" class="register-form" id="register-form" asp-action="Register" asp-controller="Account">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Firstname"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" asp-for="Firstname" id="firstname" placeholder="Your FirstName" />
+                                <span asp-validation-for="Firstname" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Lastname"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" asp-for="Lastname" id="lastname" placeholder="Your LastName" maxlength="20" />
+                                <span asp-validation-for="Lastname" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email"><i class="zmdi zmdi-email"></i></label>
+                                <input type="email" asp-for="Email" id="email" placeholder="Your Email" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Password"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" asp-for="Password" id="pass" placeholder="Password" maxlength="16" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Confirmpassword"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <input type="password" asp-for="Confirmpassword" id="pass" placeholder="Repeat your password" maxlength="16" /> 
+                                <span asp-validation-for="Confirmpassword" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Username"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <input type="text" asp-for="Username" id="username" placeholder="Username" />
+                                <span asp-validation-for="Username" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Phonenumber"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <input type="text" asp-for="Phonenumber" id="phonenumber" placeholder="Phonenumber"  />
+                                <span asp-validation-for="Phonenumber" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Dob"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <input type="date" asp-for="Dob" id="dob"  style="padding: 5px; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 10px;" placeholder="Date of Birth" />                          
+                                <span asp-validation-for="Dob" class="text-danger"></span>
+                            </div>
+                            @* <div class="form-group">
+                            <select >
+                            <option>Please select one</option>
+                            </select>
+                            <!span asp-validation-for="Role" class="text-danger"></!span>
+                            </div> *@
+                            <div class="form-group">
+                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                            </div>
+                            <div class="form-group form-button">
+
+                                <button type="submit" id="signup" class="form-submit">Register</button>
+
+                            </div>
+                        </form>
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="~/images/signup-zencare.png" alt="sing up image" asp-append-version="true"></figure>
+                        <a asp-action="Login" asp-controller="Account" class="signup-image-link">I am already member</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript">
+        (function ($) {
+            $.validator.unobtrusive.adapters.addBool("checkboxrequired", "required");
+        }(jQuery));
+    </script>
+</body>
+</html>
