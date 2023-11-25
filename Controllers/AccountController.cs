@@ -9,17 +9,17 @@ namespace Zencareservice.Controllers
     public class AccountController : Controller
     {
 
-        private readonly TwilioService _twilioService;
+        //private readonly TwilioService _twilioService;
 
-        public AccountController(IConfiguration configuration)
-        {
-            var twilioConfig = configuration.GetSection("Twilio");
-            _twilioService = new TwilioService(
-                twilioConfig["AccountSid"],
-                twilioConfig["AuthToken"],
-                twilioConfig["PhoneNumber"]
-            );
-        }
+        //public AccountController(IConfiguration configuration)
+        //{
+        //    var twilioConfig = configuration.GetSection("Twilio");
+        //    _twilioService = new TwilioService(
+        //        twilioConfig["AccountSid"],
+        //        twilioConfig["AuthToken"],
+        //        twilioConfig["PhoneNumber"]
+        //    );
+        //}
         public IActionResult Index()
         {
             return View();
@@ -54,55 +54,55 @@ namespace Zencareservice.Controllers
                 DataAccess Obj_DataAccess = new DataAccess();
                 DataSet ds = new DataSet();
                 ds = Obj_DataAccess.SaveRegister(Obj);
-                // Generate OTP and send it to the user's mobile phone
-                string generatedOtp = _twilioService.SendOtp(Obj.Phonenumber);
+            // Generate OTP and send it to the user's mobile phone
+            // string generatedOtp = _twilioService.SendOtp(Obj.Phonenumber);
 
-                // Save the generatedOtp to associate it with the user's profile
+            // Save the generatedOtp to associate it with the user's profile
 
-                // Pass the generatedOtp to the verification view
-                return RedirectToAction("VerifyOtp", new { generatedOtp });
-            
+            // Pass the generatedOtp to the verification view
+            // return RedirectToAction("VerifyOtp", new { generatedOtp });
 
-           
+
+
             //dataSet = Obj_DataAccess.SaveRegister(password);
             //dataSet = Obj_DataAccess.SaveRegister(confirmpassword);
             //dataSet = Obj_DataAccess.SaveRegister(phoneno);
             //dataSet = Obj_DataAccess.SaveRegister(username);
             //dataSet = Obj_DataAccess.SaveRegister(email);
 
-           
+            return View("Index", "Home");
 
         }
 
-        [HttpGet]
-        public IActionResult VerifyOtp(string generatedOtp)
-        {
-            // Pass the generatedOtp to the view for user verification
-            var model = new VerifyOtpViewModel { GeneratedOtp = generatedOtp };
-            return View(model);
-        }
+        //[HttpGet]
+        //public IActionResult VerifyOtp(string generatedOtp)
+        //{
+        //    // Pass the generatedOtp to the view for user verification
+        //    var model = new VerifyOtpViewModel { GeneratedOtp = generatedOtp };
+        //    return View(model);
+        //}
 
-        [HttpPost]
-        public IActionResult VerifyOtp(VerifyOtpViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                // Verify the user-entered OTP
-                bool isOtpValid = _twilioService.VerifyOtp(model.UserEnteredOtp);
+        //[HttpPost]
+        //public IActionResult VerifyOtp(VerifyOtpViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // Verify the user-entered OTP
+        //        bool isOtpValid = _twilioService.VerifyOtp(model.UserEnteredOtp);
 
-                if (isOtpValid)
-                {
-                    // OTP is valid, complete the registration process
-                    return RedirectToAction("RegistrationSuccess");
-                }
-                else
-                {
-                    ModelState.AddModelError("UserEnteredOtp", "Invalid OTP");
-                }
-            }
+        //        if (isOtpValid)
+        //        {
+        //            // OTP is valid, complete the registration process
+        //            return RedirectToAction("RegistrationSuccess");
+        //        }
+        //        else
+        //        {
+        //            ModelState.AddModelError("UserEnteredOtp", "Invalid OTP");
+        //        }
+        //    }
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
 
         public IActionResult RegistrationSuccess()
         {
