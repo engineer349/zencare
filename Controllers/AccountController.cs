@@ -140,7 +140,7 @@ namespace Zencareservice.Controllers
                         int AuthCode = 5632;
 
                         SendMail sendMail = new SendMail();
-                        //string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", "vdgopisrinivasan@gmail.com", "");
+                        string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", "vdgopisrinivasan@gmail.com", "SendingEmail","","Autoverification","smtp.gmail.com",587);
                         string UsrId = ds.Tables[0].Rows[0]["RId"].ToString();
                         string UserName = ds.Tables[0].Rows[0]["Username"].ToString();
                         string Email = ds.Tables[0].Rows[0]["Email"].ToString();
