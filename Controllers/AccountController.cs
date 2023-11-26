@@ -118,46 +118,59 @@ namespace Zencareservice.Controllers
             string username = Obj.Username;
             string password = Obj.Password;
 
-            DataAccess Obj_DataAccess = new DataAccess();
-            DataSet ds = new DataSet();
-            ds = Obj_DataAccess.SaveLogin(Obj);
-
-            int Status;
-            
-            if (ds.Tables[0].Rows.Count > 0)
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
 
-                Status = Convert.ToInt32(ds.Tables[0].Rows[0]["LStatus"]);
-                if(Status==1)
-                {
-                    string UsrId = ds.Tables[0].Rows[0]["RId"].ToString();
-                    string UserName = ds.Tables[0].Rows[0]["Username"].ToString();
-                    string Email = ds.Tables[0].Rows[0]["Email"].ToString();
 
-                    var cookieOptions = new CookieOptions
+
+               
+
+                DataAccess Obj_DataAccess = new DataAccess();
+                DataSet ds = new DataSet();
+                ds = Obj_DataAccess.SaveLogin(Obj);
+
+                int Status;
+
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+
+                    Status = Convert.ToInt32(ds.Tables[0].Rows[0]["LStatus"]);
+                    if (Status == 1)
                     {
-                        Expires = DateTime.Now.AddDays(1), // Set the expiration date
-                        HttpOnly = true, // Makes the cookie accessible only to the server-side code
-                     };
+                        int AuthCode = 5632;
+
+                        SendMail sendMail = new SendMail();
+                        //string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", "vdgopisrinivasan@gmail.com", "");
+                        string UsrId = ds.Tables[0].Rows[0]["RId"].ToString();
+                        string UserName = ds.Tables[0].Rows[0]["Username"].ToString();
+                        string Email = ds.Tables[0].Rows[0]["Email"].ToString();
+
+                        var cookieOptions = new CookieOptions
+                        {
+                            Expires = DateTime.Now.AddDays(1), // Set the expiration date
+                            HttpOnly = true, // Makes the cookie accessible only to the server-side code
+                        };
                         Response.Cookies.Append("MyCookie", "CookieValue", cookieOptions);
                         Response.Cookies.Append("UserId", UsrId);
+                        CookieOptions options = new CookieOptions();
+                        options.Expires = DateTime.Now.AddMinutes(5);
+                        Response.Cookies.Append("UsrName", UserName, options);
 
-                    //return View("Dashboard");
-                    return RedirectToAction("Dashboard","Report");
+                        CookieOptions options1 = new CookieOptions();
+                        options.Expires = DateTime.Now.AddMinutes(5);
+                        Response.Cookies.Append("UsrId", UsrId, options1);
 
-                    //CookieOptions options = new CookieOptions();
-                    //options.Expires = DateTime.Now.AddDays(7);
-                    //Response.Cookies.Append("UserId", UsrId, options);
-                    //Response.Cookies.Append("UserName", UserName, options);
-                    //Response.Cookies.Append("Email", Email, options);
-                    //return RedirectToAction("Dashboard","Report");
+                        return RedirectToAction("Dashboard", "Report");
+
+
+                    }
                 }
             }
-            //dataSet = Obj_DataAccess.SaveRegister(password);
-            //dataSet = Obj_DataAccess.SaveRegister(confirmpassword);
-            //dataSet = Obj_DataAccess.SaveRegister(phoneno);
-            //dataSet = Obj_DataAccess.SaveRegister(username);
-            //dataSet = Obj_DataAccess.SaveRegister(email);
+            else
+            {
+                return View();
+
+            }
 
             return View(); 
 
