@@ -59,14 +59,10 @@
             </div>
             <div class="d-flex align-items-right">
 
-                @* <a class="nav-link text-dark" id="register"  asp-action="Register" asp-controller="Account"><i class="fas fa-user-plus"></i> Sign Up</a>
-                *@
-                <i class="fas fa-user-plus"> </i>
-                @Html.ActionLink("Sign Up", "Register", "Account", null, new { @class = "nav-link text-dark", id = "register" })
-                @* <a  class="nav-link text-dark"  id="login"  asp-action="Login" asp-controller="Account" ><i class="fas fa-sign-in-alt"></i> Log In</a> *@
-                <i class="fas fa-sign-in-alt"></i>
-                @Html.ActionLink("Login", "Login", "Account", null, new { @class = "nav-link text-dark", id = "login" })
+                <a class="nav-link text-dark" id="register"  asp-action="Register" asp-controller="Account"><i class="fas fa-user-plus"></i> Sign Up</a>
 
+                <a class="nav-link text-dark" id="login" asp-action="Login" asp-controller="Account"><i class="fas fa-sign-in-alt"></i> Login</a>
+  
             </div>
         </div>
     </div>

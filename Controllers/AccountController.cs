@@ -29,6 +29,10 @@ namespace Zencareservice.Controllers
         {
             return View();
         }
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
 
         public IActionResult Login() 
         {
@@ -138,8 +142,8 @@ namespace Zencareservice.Controllers
                         Response.Cookies.Append("MyCookie", "CookieValue", cookieOptions);
                         Response.Cookies.Append("UserId", UsrId);
 
-                    return View("Dashboard", "Report");
-
+                    //return View("Dashboard");
+                    return RedirectToAction("Dashboard","Report");
 
                     //CookieOptions options = new CookieOptions();
                     //options.Expires = DateTime.Now.AddDays(7);

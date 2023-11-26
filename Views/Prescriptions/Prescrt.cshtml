@@ -6,13 +6,13 @@
     ViewData["Title"] = "CreatePrescriptions";
 }
 @model Zencareservice.Models.Prescriptions;
+<h3>PrescriptionDetails</h3>
 <html>
 <head>
     <meta lang="en" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<h3>PrescriptionDetails</h3>
 <body>
     <form asp-action="Prescrt">
         <div class="form-row">
@@ -21,10 +21,15 @@
                 <input type="text" asp-for="DoctorName" class="form-control" id="patientname" placeholder="DoctorName">
                 <span asp-validation-for="DoctorName" class="text-danger"></span>
             </div>
-            <div class="form-group col-md-6">
-                <label asp-for="PatientName">PatientName</label>
-                <input type="text" asp-for="PatientName" class="form-control" id="lastname" placeholder="PatientName">
-                <span asp-validation-for="PatientName" class="text-danger"></span>
+            <div class="form-group col-md-3">
+                <label asp-for="PatientFirstName">PatientName</label>
+                <input type="text" asp-for="PatientFirstName" class="form-control" id="lastname" placeholder="PatientFirstName">
+                <span asp-validation-for="PatientFirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="PatientLastName">PatientLastName</label>
+                <input type="text" asp-for="PatientLastName" class="form-control" id="lastname" placeholder="PatientLastName">
+                <span asp-validation-for="PatientLastName" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">
