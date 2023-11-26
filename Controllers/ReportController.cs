@@ -7,12 +7,11 @@ namespace Zencareservice.Controllers
         public IActionResult Index()
         {
             return View();
+
         }
-        [HttpPost]
         public IActionResult Dashboard()
         {
-            var UserNamews = Request.Cookies["MyCookie"];
-            string UserName = Request.Cookies["UsrId"].ToString();
+          
             return View();
         }
     }

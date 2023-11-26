@@ -17,7 +17,7 @@ builder.Services.ConfigureApplicationCookie(o => {
 });
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddRazorPages();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -39,7 +39,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Prescriptions}/{action=Prescrt}/{id?}");
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
 });

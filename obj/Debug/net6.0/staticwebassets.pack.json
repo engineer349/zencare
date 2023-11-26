@@ -749,6 +749,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\forms\\Contact.php",
+      "PackagePath": "staticwebassets\\forms\\Contact.php"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\icons\\daypilot.svg",
       "PackagePath": "staticwebassets\\icons\\daypilot.svg"
     },

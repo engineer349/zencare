@@ -5,50 +5,76 @@
     Layout = "_AdminLayout";
     ViewData["Title"] = "CreatePrescriptions";
 }
-<form>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="inputEmail4">Email</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+@model Zencareservice.Models.Prescriptions;
+<html>
+<head>
+    <meta lang="en" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<h3>PrescriptionDetails</h3>
+<body>
+    <form asp-action="Prescrt">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="DoctorName">DoctorName</label>
+                <input type="text" asp-for="DoctorName" class="form-control" id="patientname" placeholder="DoctorName">
+                <span asp-validation-for="DoctorName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="PatientName">PatientName</label>
+                <input type="text" asp-for="PatientName" class="form-control" id="lastname" placeholder="PatientName">
+                <span asp-validation-for="PatientName" class="text-danger"></span>
+            </div>
         </div>
-        <div class="form-group col-md-6">
-            <label for="inputPassword4">Password</label>
-            <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label asp-for="PatientAge">Age</label>
+                <input asp-for="PatientAge" type=" text" class="form-control" id="age" placeholder="Age">
+                <span asp-validation-for="PatientAge" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="PatientContactNo">ContactNo</label>
+                <input asp-for="PatientContactNo" type="tel" class="form-control" id="phoneno" placeholder="ContactNo">
+                <span asp-validation-for="PatientContactNo" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Gender">Gender</label>
+                <select asp-for="Gender" name="BedType" id="gender" class="form-control">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Transgender">Transgender</option>
+                </select>
+
+                <span asp-validation-for="Gender" class="text-danger"></span>
+                
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="inputAddress">Address</label>
-        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-    </div>
-    <div class="form-group">
-        <label for="inputAddress2">Address 2</label>
-        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="inputCity">City</label>
-            <input type="text" class="form-control" id="inputCity">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="PatientDiagnosis">PatientDiagnosis</label>
+                <input asp-for="PatientDiagnosis" type="text" class="form-control" id="patientdiagnosis">
+                <span asp-validation-for="PatientDiagnosis" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="patientdetails" class="form-label">PatientDetails</label>
+                <input class="form-control" type="file" id="patientdetails" multiple />
+            </div>
         </div>
-        <div class="form-group col-md-4">
-            <label for="inputState">State</label>
-            <select id="inputState" class="form-control">
-                <option selected>Choose...</option>
-                <option>...</option>
-            </select>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label asp-for="PrescriptionDetail">Prescription Details</label>
+                <input asp-for="PrescriptionDetail" type="text" class="form-control" id="prescriptiondetails">
+                <span asp-validation-for="PrescriptionDetail" class="text-danger"></span>
+            </div>
         </div>
-        <div class="form-group col-md-2">
-            <label for="inputZip">Zip</label>
-            <input type="text" class="form-control" id="inputZip">
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
-            <label class="form-check-label" for="gridCheck">
-                Check me out
-            </label>
-        </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Sign in</button>
-</form>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</body>
+</html>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 

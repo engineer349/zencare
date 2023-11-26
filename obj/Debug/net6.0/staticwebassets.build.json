@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ghKHqxHNKknUwatkmAagKZm+xi1Zd4ssx+TO2Apzyjg=",
+  "Hash": "t9PCsavSPk9kCWQmedXcUV69Vy/qq6R2itnn69KFIlo=",
   "Source": "Zencareservice",
   "BasePath": "_content/Zencareservice",
   "Mode": "Default",
@@ -3211,6 +3211,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "D:\\Projects\\Zencareservice\\wwwroot\\forms\\Contact.php",
+      "SourceId": "Zencareservice",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Zencareservice\\wwwroot\\",
+      "BasePath": "_content/Zencareservice",
+      "RelativePath": "forms/Contact.php",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\forms\\Contact.php"
     },
     {
       "Identity": "D:\\Projects\\Zencareservice\\wwwroot\\icons\\daypilot.svg",

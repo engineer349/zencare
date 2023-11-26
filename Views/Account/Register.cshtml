@@ -79,7 +79,7 @@
                             </div>
                             <div class="form-group form-button">
 
-                                <button type="submit" id="signup" class="form-submit">Register</button>
+                                <button type="submit" id="signup" class="form-submit"  onclick="save()">Register</button>
 
                             </div>
                         </form>
@@ -99,6 +99,12 @@
         (function ($) {
             $.validator.unobtrusive.adapters.addBool("checkboxrequired", "required");
         }(jQuery));
+
+       function save()
+       {
+           alert("Registered Successfully!");
+       }
+
     </script>
 </body>
 </html>

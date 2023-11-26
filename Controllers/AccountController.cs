@@ -138,7 +138,7 @@ namespace Zencareservice.Controllers
                         Response.Cookies.Append("MyCookie", "CookieValue", cookieOptions);
                         Response.Cookies.Append("UserId", UsrId);
 
-                 
+                    return View("Dashboard", "Report");
 
 
                     //CookieOptions options = new CookieOptions();
@@ -146,7 +146,7 @@ namespace Zencareservice.Controllers
                     //Response.Cookies.Append("UserId", UsrId, options);
                     //Response.Cookies.Append("UserName", UserName, options);
                     //Response.Cookies.Append("Email", Email, options);
-                    return RedirectToAction("Dashboard","Report");
+                    //return RedirectToAction("Dashboard","Report");
                 }
             }
             //dataSet = Obj_DataAccess.SaveRegister(password);
