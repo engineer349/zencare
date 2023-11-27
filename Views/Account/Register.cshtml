@@ -42,10 +42,9 @@
                             <div class="form-group">
                                 <label asp-for="Email"><i class="zmdi zmdi-email"></i></label>
                                 <input type="email" asp-for="Email" id="email" placeholder="Your Email" />
-                                <span asp-validation-for="Email" class="text-danger"></span>   
-                                
-                            </div>
-                            <button type="button" class="btn btn-primary">VerifyEmail</button>
+                                <span asp-validation-for="Email" class="text-danger"></span>                                 
+                            </div>                         
+                           <button asp-action="VerifyEmail" class="btn btn-primary" >VerifyEmail</button>
                             <div class="form-group">
                                 <label asp-for="Password"><i class="zmdi zmdi-lock"></i></label>
                                 <input type="password" asp-for="Password" id="pass" placeholder="Password" min="8" maxlength="16" />

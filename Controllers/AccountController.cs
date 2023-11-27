@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using System.Net.Mail;
 using System.Reflection;
 using Zencareservice.Models;
 using Zencareservice.Repository;
@@ -37,6 +38,16 @@ namespace Zencareservice.Controllers
         public IActionResult Login() 
         {
             return View();
+        }
+
+        public IActionResult VerifyEmail(Signup Obj)
+        {   
+            int AuthCode = 5632;
+
+            SendMail sendMail = new SendMail();
+            SmtpClient client = new SmtpClient();       
+            string mail = sendMail.EmailSend("vdgopisrinivasan@gmail.com", Obj.Email, "ryaduugyxgrkiogr", "Autoverification", "OTPVerify", "smtp.gmail.com", 587);
+            return View("Login");
         }
 
         [HttpPost]
@@ -77,6 +88,9 @@ namespace Zencareservice.Controllers
             return View("Index", "Home");
 
         }
+
+     
+       
 
         //[HttpGet]
         //public IActionResult VerifyOtp(string generatedOtp)
@@ -137,10 +151,7 @@ namespace Zencareservice.Controllers
                     Status = Convert.ToInt32(ds.Tables[0].Rows[0]["LStatus"]);
                     if (Status == 1)
                     {
-                        int AuthCode = 5632;
-
-                        SendMail sendMail = new SendMail();
-                        string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", "vdgopisrinivasan@gmail.com", "SendingEmail","","Autoverification","smtp.gmail.com",587);
+                        
                         string UsrId = ds.Tables[0].Rows[0]["RId"].ToString();
                         string UserName = ds.Tables[0].Rows[0]["Username"].ToString();
                         string Email = ds.Tables[0].Rows[0]["Email"].ToString();
