@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
 using System.Net.Mail;
 using System.Reflection;
@@ -26,6 +27,26 @@ namespace Zencareservice.Controllers
             return View();
         }
 
+
+        public IActionResult VerifyOtp(Signup Obj)
+        {
+            return View();
+        }
+
+        public IActionResult ValidateOtp(Signup Obj)
+        {
+            if (Obj.Randomcode == ViewBag.Random)
+            {
+                // OTP is correct, proceed with registration
+
+                return View("RegistrationSuccess", "Account");
+            }
+          
+            return View();
+        }
+           
+           
+      
         public IActionResult Register()
         {
             return View();
@@ -40,25 +61,40 @@ namespace Zencareservice.Controllers
             return View();
         }
 
-        public IActionResult VerifyEmail(Signup Obj)
-        {   
-            int AuthCode = 5632;
+        public IActionResult ResendEmail(Signup Obj)
+        {
+            Register();
+
+            Random random = new Random();
+            // Generate a random 5-digit code
+            int randomCode = random.Next(10000, 100000);
 
             SendMail sendMail = new SendMail();
             SmtpClient client = new SmtpClient();       
-            string mail = sendMail.EmailSend("vdgopisrinivasan@gmail.com", Obj.Email, "ryaduugyxgrkiogr", "Autoverification", "OTPVerify", "smtp.gmail.com", 587);
-            return View("Login");
+            string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", Obj.Email, "lamubclwmhfjwjjs", "Autoverification", "Your Zencareservice signup Account OTP verification of Email is "+ + randomCode, "smtp.gmail.com", 587);
+            return View("VerifyOtp", "Account");
         }
+
 
         [HttpPost]
         public IActionResult Register(Signup Obj)
         {
-            
-            
+                Random random = new Random();
+
+                // Generate a random 5-digit code
+                int randomCode = random.Next(10000, 100000);
+                string email = Obj.Email;
+                SendMail sendMail = new SendMail();
+                SmtpClient client = new SmtpClient();
+                string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", Obj.Email, "lamubclwmhfjwjjs", "Autoverification", "Your Zencareservice signup Account OTP verification of Email is" + +randomCode, "smtp.gmail.com", 587);
+                
+               if (Obj.Email != null)
+                {
+
 
                 string fname = Obj.Firstname;
                 string lname = Obj.Lastname;
-                string email = Obj.Email;
+
                 string password = Obj.Password;
                 string confirmpassword = Obj.Confirmpassword;
                 string username = Obj.Username;
@@ -66,9 +102,16 @@ namespace Zencareservice.Controllers
                 Obj.Status = 1;
                 Obj.Role = "Patient";
 
+                return RedirectToAction("VerifyOtp", "Account");
+
+                }
+                
                 DataAccess Obj_DataAccess = new DataAccess();
                 DataSet ds = new DataSet();
                 ds = Obj_DataAccess.SaveRegister(Obj);
+
+                return RedirectToAction("Login", "Account");
+               
             // Generate OTP and send it to the user's mobile phone
             // string generatedOtp = _twilioService.SendOtp(Obj.Phonenumber);
 
@@ -84,8 +127,8 @@ namespace Zencareservice.Controllers
             //dataSet = Obj_DataAccess.SaveRegister(phoneno);
             //dataSet = Obj_DataAccess.SaveRegister(username);
             //dataSet = Obj_DataAccess.SaveRegister(email);
-
-            return View("Index", "Home");
+          
+           
 
         }
 

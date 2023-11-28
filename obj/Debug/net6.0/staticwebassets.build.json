@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "t9PCsavSPk9kCWQmedXcUV69Vy/qq6R2itnn69KFIlo=",
+  "Hash": "gn17KEukt0eHlMxel8ppq0oCpgo6oxW1km6Zu6rdbLg=",
   "Source": "Zencareservice",
   "BasePath": "_content/Zencareservice",
   "Mode": "Default",
@@ -2295,6 +2295,23 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
+      "Identity": "D:\\Projects\\Zencareservice\\wwwroot\\css\\Verifyotp.css",
+      "SourceId": "Zencareservice",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Zencareservice\\wwwroot\\",
+      "BasePath": "_content/Zencareservice",
+      "RelativePath": "css/Verifyotp.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Verifyotp.css"
+    },
+    {
       "Identity": "D:\\Projects\\Zencareservice\\wwwroot\\dist\\css\\adminlte.css",
       "SourceId": "Zencareservice",
       "SourceType": "Discovered",
@@ -3381,6 +3398,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "D:\\Projects\\Zencareservice\\wwwroot\\js\\verifyotp.js",
+      "SourceId": "Zencareservice",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\Zencareservice\\wwwroot\\",
+      "BasePath": "_content/Zencareservice",
+      "RelativePath": "js/verifyotp.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\verifyotp.js"
     },
     {
       "Identity": "D:\\Projects\\Zencareservice\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",

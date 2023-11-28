@@ -6,6 +6,7 @@ namespace Zencareservice.Models
     public class Signup
     {
 
+        
         public string Rcode { get; set; }
 
         [Required(ErrorMessage = "Firstname required!")]
@@ -51,6 +52,7 @@ namespace Zencareservice.Models
 
         public DateTime Dob { get; set; }
 
+        public string Randomcode { get; set; }
         public int Status { get; set; }
 
 

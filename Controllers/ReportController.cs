@@ -14,6 +14,7 @@ namespace Zencareservice.Controllers
             string UsrId = Request.Cookies["UsrId"];
 
             string UsrName = Request.Cookies["UsrName"];
+
             if (string.IsNullOrEmpty(UsrId) || string.IsNullOrEmpty(UsrName))
             {
                 return RedirectToAction("Login","Account");

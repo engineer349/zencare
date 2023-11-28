@@ -1,5 +1,6 @@
 ﻿using System.Net.Mail;
 using System.Net;
+using Twilio.Http;
 
 namespace Zencareservice.Models
 {
@@ -17,7 +18,7 @@ namespace Zencareservice.Models
                 message.Subject = Subject;
                 message.IsBodyHtml = true; //to make message body as html
                 message.Body = Mailbody;
-
+               
                 using (SmtpClient smtpClient = new SmtpClient())
                 {
                     smtpClient.Host = "smtp.gmail.com";
@@ -28,6 +29,7 @@ namespace Zencareservice.Models
                     smtpClient.Credentials = new NetworkCredential(From, Pass);
                     smtpClient.Send(message);
 
+                    
                   
                 }
 
@@ -35,7 +37,8 @@ namespace Zencareservice.Models
             catch (Exception ex)
             {
                 throw ex;
-                return ("Failed");
+             
+
             }
             return ("Success");
         }
