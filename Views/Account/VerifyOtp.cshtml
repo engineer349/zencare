@@ -15,7 +15,6 @@
 
     <meta charset="UTF-8">
 
-   
 
     <title>Verify Otp</title>
 
@@ -113,6 +112,10 @@
     <body>
         <p>An OTP has been sent to your phone. Please enter the OTP to complete registration.</p>
 
+     <form>
+
+
+      
         <div class="container height-100 d-flex justify-content-center align-items-center">
             <div class="position-relative">
                 <div class="card p-2 text-center">
@@ -122,12 +125,13 @@
                     </div>
                     <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
 
-                    <input class="m-2 text-center form-control rounded" type="text" id="first" maxlength="1" />
-                    <input class="m-2 text-center form-control rounded" type="text" id="second" maxlength="1" />
-                    <input class="m-2 text-center form-control rounded" type="text" id="third" maxlength="1" /> 
-                    <input class="m-2 text-center form-control rounded" type="text" id="fourth" maxlength="1" />
-                    <input class="m-2 text-center form-control rounded" type="text" id="fifth" maxlength="1" />
-                    <input type="hidden"  asp-for="Randomcode"/>
+                    <input class="m-2 text-center form-control rounded" type="text" id="first" maxlength="1" asp-for="numeric1" />
+                    <input class="m-2 text-center form-control rounded" type="text" id="second" maxlength="1" asp-for="numeric2"/>
+                    <input class="m-2 text-center form-control rounded" type="text" id="third" maxlength="1" asp-for="numeric3"/> 
+                    <input class="m-2 text-center form-control rounded" type="text" id="fourth" maxlength="1"asp-for="numeric4" />
+                    <input class="m-2 text-center form-control rounded" type="text" id="fifth" maxlength="1" asp-for="numeric5"/>
+
+ 
                     </div> 
                     <div class="mt-4">
                     <button class="btn btn-danger px-4 validate" asp-action="ValidateOtp" asp-controller="Account">Validate</button>
@@ -135,12 +139,12 @@
                      </div> 
                      <div class="card-2"> 
                          <div class="content d-flex justify-content-center align-items-center">
-                    <span>Didn't get the code</span> <a asp-action="VerifyOtp" asp-controller="Account" class="text-decoration-none ms-3">Resend(1/3)</a>
+                         <span>Didn't get the code</span> <a asp-action="ResendEmail" asp-controller="Account" class="text-decoration-none ms-3">Resend</a>
                 </div> 
                      </div> 
                      </div>
         </div>
-
+       </form>
     </body>
     
 

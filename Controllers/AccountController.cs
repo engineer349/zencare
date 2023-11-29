@@ -1,10 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing.Template;
 using System.Data;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Reflection;
+using System.Text;
+using Twilio.TwiML.Messaging;
 using Zencareservice.Models;
 using Zencareservice.Repository;
+using System;
+using System.IO;
 
 namespace Zencareservice.Controllers
 {
@@ -22,38 +28,77 @@ namespace Zencareservice.Controllers
         //        twilioConfig["PhoneNumber"]
         //    );
         //}
+        private int _generatedOtp;
+        
         public IActionResult Index()
         {
             return View();
         }
 
+        public bool IsOtpValid(string enteredOtp)
+        {
+            // Check if the entered OTP is a valid integer
+            if (int.TryParse(enteredOtp, out int enteredOtpValue))
+            {
+                // Compare with the originally generated OTP
+                return enteredOtpValue == _generatedOtp;
+            }
+
+            return false;
+        }
 
         public IActionResult VerifyOtp(Signup Obj)
         {
             return View();
         }
 
-        public IActionResult ValidateOtp(Signup Obj)
+     
+        public IActionResult ValidateOtp(Signup model)
         {
-            if (Obj.Randomcode == ViewBag.Random)
-            {
-                // OTP is correct, proceed with registration
-
-                return View("RegistrationSuccess", "Account");
-            }
           
-            return View();
+            string enteredOtp = model.numeric1 +""+model.numeric2+ ""+model.numeric3+""+model.numeric4 +""+model.numeric5;
+
+            string _genotp = ViewData["key"].ToString();
+
+            if(Convert.ToInt64(enteredOtp) ==  _generatedOtp)
+            {
+                return View("Login", "Account");
+            }
+
+            // OTP is not valid, handle accordingly
+            return View("Login");
+           
         }
            
-           
-      
+        
+   
         public IActionResult Register()
         {
             return View();
         }
         public IActionResult ResetPassword()
         {
+           
             return View();
+        }
+        private IActionResult PasswordConfirmation()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ResetPassword(Signup Obj)
+        {
+            string ResetEmail = Obj.Email;
+
+            if(ResetEmail!=null)
+            {
+                return View("PasswordConfirmation","Account");
+            }
+
+            return View("Index", "Home");
+         
+            
         }
 
         public IActionResult Login() 
@@ -68,27 +113,40 @@ namespace Zencareservice.Controllers
             Random random = new Random();
             // Generate a random 5-digit code
             int randomCode = random.Next(10000, 100000);
+            _generatedOtp = randomCode;
+          
 
             SendMail sendMail = new SendMail();
-            SmtpClient client = new SmtpClient();       
+            SmtpClient client = new SmtpClient();
+           
             string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", Obj.Email, "lamubclwmhfjwjjs", "Autoverification", "Your Zencareservice signup Account OTP verification of Email is "+ + randomCode, "smtp.gmail.com", 587);
+            
             return View("VerifyOtp", "Account");
         }
 
+        public IActionResult SubjectMail()
+        {
+            return View();
+        }
+        
 
         [HttpPost]
         public IActionResult Register(Signup Obj)
         {
-                Random random = new Random();
+                //Random random = new Random();
 
-                // Generate a random 5-digit code
-                int randomCode = random.Next(10000, 100000);
+                //// Generate a random 5-digit code
+                //int randomCode = random.Next(10000, 100000);
+                //_generatedOtp = randomCode;
+
+               
+
                 string email = Obj.Email;
                 SendMail sendMail = new SendMail();
-                SmtpClient client = new SmtpClient();
-                string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", Obj.Email, "lamubclwmhfjwjjs", "Autoverification", "Your Zencareservice signup Account OTP verification of Email is" + +randomCode, "smtp.gmail.com", 587);
+                SmtpClient client = new SmtpClient();    
+                string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", Obj.Email, "lamubclwmhfjwjjs", "Autoverification", "Your Zencareservice signup Account OTP verification of Email is" , "smtp.gmail.com", 587);
                 
-               if (Obj.Email != null)
+               if (Obj.Email != null && mail =="Success")
                 {
 
 
@@ -102,13 +160,15 @@ namespace Zencareservice.Controllers
                 Obj.Status = 1;
                 Obj.Role = "Patient";
 
-                return RedirectToAction("VerifyOtp", "Account");
 
-                }
-                
                 DataAccess Obj_DataAccess = new DataAccess();
                 DataSet ds = new DataSet();
                 ds = Obj_DataAccess.SaveRegister(Obj);
+
+                return RedirectToAction("VerifyOtp", "Account");
+            }
+                
+               
 
                 return RedirectToAction("Login", "Account");
                
@@ -118,16 +178,7 @@ namespace Zencareservice.Controllers
             // Save the generatedOtp to associate it with the user's profile
 
             // Pass the generatedOtp to the verification view
-            // return RedirectToAction("VerifyOtp", new { generatedOtp });
-
-
-
-            //dataSet = Obj_DataAccess.SaveRegister(password);
-            //dataSet = Obj_DataAccess.SaveRegister(confirmpassword);
-            //dataSet = Obj_DataAccess.SaveRegister(phoneno);
-            //dataSet = Obj_DataAccess.SaveRegister(username);
-            //dataSet = Obj_DataAccess.SaveRegister(email);
-          
+            // return RedirectToAction("VerifyOtp", new { generatedOtp })
            
 
         }
@@ -178,9 +229,6 @@ namespace Zencareservice.Controllers
             if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
 
-
-
-               
 
                 DataAccess Obj_DataAccess = new DataAccess();
                 DataSet ds = new DataSet();

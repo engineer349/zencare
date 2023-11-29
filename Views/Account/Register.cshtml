@@ -31,35 +31,35 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group">
                                 <label asp-for="Firstname"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" asp-for="Firstname" id="firstname" placeholder="Your FirstName" />
+                                <input type="text" asp-for="Firstname" id="firstname" placeholder="Your FirstName" minlength="4" maxlength="16" />
                                 <span asp-validation-for="Firstname" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Lastname"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" asp-for="Lastname" id="lastname" placeholder="Your LastName" maxlength="20" />
+                                <input type="text" asp-for="Lastname" id="lastname" placeholder="Your LastName" minlength="4" maxlength="16" />
                                 <span asp-validation-for="Lastname" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" asp-for="Email" id="email" placeholder="Your Email" />
+                                <input type="email" asp-for="Email" id="email" pattern="[a-zA-Z0-9._%+-]+(gmail\.com|yahoo\.com|redhat\.com|[a-zA-Z0-9.-]+\.(com|edu|org))" title="Please enter a valid email address" placeholder="Your Email" required />
                                 <span asp-validation-for="Email" class="text-danger"></span>                                 
                             </div>                         
-                           <button asp-action="VerifyEmail" class="btn btn-primary" >VerifyEmail</button>
                             <div class="form-group">
                                 <label asp-for="Password"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" asp-for="Password" id="pass" placeholder="Password" min="8" maxlength="16" />
+                                <input type="password" asp-for="Password" id="pass" placeholder="Password" pattern="^(?=.*[A-Za-z0-9])(?=.*[@@$!%*#?&]).{8,16}$" title="Password must be at least 8 characters long, alphanumeric, and contain at least one special character." required />
                                 <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Confirmpassword"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" asp-for="Confirmpassword" id="pass" placeholder="Repeat your password" min="8" maxlength="16" /> 
+                                <input type="password" asp-for="Confirmpassword" id="pass" placeholder="Repeat your password" pattern="^(?=.*[A-Za-z0-9])(?=.*[@@$!%*#?&]).{8,16}$"  title="Password must be at least 8 characters long, alphanumeric, and contain at least one special character." required />
                                 <span asp-validation-for="Confirmpassword" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Username"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="text" asp-for="Username" id="username" placeholder="Username" />
+                                <input type="text" asp-for="Username" id="username" placeholder="Username" pattern="[a-zA-Z0-9]{6,10}" title="Username must be alphanumeric and between 6 and 10 characters." required />
                                 <span asp-validation-for="Username" class="text-danger"></span>
                             </div>
+
                             <div class="form-group">
                                 <label asp-for="Phonenumber"><i class="zmdi zmdi-lock-outline"></i></label>
                                 <input type="tel" asp-for="Phonenumber" id="phonenumber" placeholder="Phonenumber"  />                       
@@ -78,11 +78,12 @@
                             <!span asp-validation-for="Role" class="text-danger"></!span>
                             </div> *@
                             <div class="form-group">
+                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term"  required/>
                                 <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
                             </div>
                             <div class="form-group form-button">
 
-                                <button type="submit" id="signup" class="form-submit"  onclick="save()" name="Register">Register</button>
+                                <button type="submit" id="signup" class="form-submit" onclick="validateForm()" name="Register">Register</button>
 
                             </div>
                         </form>
@@ -102,12 +103,62 @@
         (function ($) {
             $.validator.unobtrusive.adapters.addBool("checkboxrequired", "required");
         }(jQuery));
+        
 
-       function save()
-       {
-           alert("Registered Successfully!");
-       }
 
-    </script>
+  <script type="text/javascript">
+    function validateForm() {
+        // Validate Firstname
+        var firstname = document.getElementById("firstname").value.trim();
+        if (firstname === "") {
+            alert("First name cannot be empty.");
+            return false;
+        }
+        if (!/^[a-zA-Z]{4,16}$/.test(firstname)) {
+            alert("First name must contain only letters and be between 4 and 16 characters.");
+            return false;
+        }
+
+        // Validate Password
+        var password = document.getElementById("pass").value.trim();
+        if (password === "") {
+            alert("Password cannot be empty.");
+            return false;
+        }
+        if (!/^(?=.*[A-Za-z\d])(?=.*[$!%*#?&]).{8,16}$/.test(password)) {
+            alert("Password must be at least 8 characters long, alphanumeric, and contain at least one special character.");
+            return false;
+        }
+
+        // Validate Email
+        var email = document.getElementById("email").value.trim();
+        if (email === "") {
+            alert("Email cannot be empty.");
+            return false;
+        }
+        if (!/^[a-zA-Z0-9._%+-]+(gmail\.com|yahoo\.com|redhat\.com|[a-zA-Z0-9.-]+\.(com|edu|org))$/.test(email)) {
+            alert("Please enter a valid email address with the specified domains.");
+            return false;
+        }
+
+        // Validate Username
+        var username = document.getElementById("username").value.trim();
+        if (username === "") {
+            alert("Username cannot be empty.");
+            return false;
+        }
+        if (!/^[a-zA-Z0-9]{6,10}$/.test(username)) {
+            alert("Username must be alphanumeric and between 6 and 10 characters.");
+            return false;
+        }
+
+        // If all validations pass, return true to allow form submission
+        return true;
+    }
+  </script>
+
+ 
+
+
 </body>
 </html>

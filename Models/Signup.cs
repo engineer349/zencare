@@ -6,45 +6,56 @@ namespace Zencareservice.Models
     public class Signup
     {
 
+        public string numeric1 { get; set; }
         
+        public string numeric2 { get; set; }
+
+        public string numeric3 { get; set; }
+
+        public string numeric4 { get; set; }
+
+        public string numeric5 { get; set; }
         public string Rcode { get; set; }
 
         [Required(ErrorMessage = "Firstname required!")]
         [DataType(DataType.Text)]
-        [StringLength(13, MinimumLength = 4)]
+        [StringLength(16, MinimumLength = 4, ErrorMessage = "Firstname must be between 4 and 16 characters.")]
         public string Firstname { get; set; }
 
         [Required(ErrorMessage = "Lastname required!")]
         [DataType(DataType.Text)]
-        [StringLength(13, MinimumLength = 4)]
+        [StringLength(16, MinimumLength = 4, ErrorMessage = "Firstname must be between 4 and 16 characters.")]
         public string Lastname { get; set; }
 
         [Required(ErrorMessage = "Please enter Emailaddress")]
         [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"^\S+@\S+\.\S+$", ErrorMessage = "Please enter a valid email address.")]
         public string Email { get; set; }
+
+        private const string PasswordRegexPattern = @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$";
 
         [Required(ErrorMessage = "Password required")]
         [DataType(DataType.Password)]
-        [MaxLength(16)]
+        [RegularExpression(PasswordRegexPattern, ErrorMessage = "Password must be alphanumeric with at least one special character and be 8 to 16 characters long.")]
         public string Password { get; set; }
 
         [NotMapped]
         [Required(ErrorMessage = "Confirm Password required")]
         [CompareAttribute("Password", ErrorMessage = "Password doesn't match.")]
-        [MaxLength(16)]
+        [RegularExpression(PasswordRegexPattern, ErrorMessage = "Password must be alphanumeric with at least one special character and be 8 to 16 characters long.")]
 
         public string Confirmpassword { get; set; }
 
+
         [Required(ErrorMessage = "Enter Username")]
-        [MaxLength(16)]
+        [StringLength(10, MinimumLength = 6, ErrorMessage = "Username must be between 6 and  10 characters.")]
 
         public string Username { get; set; }
 
 
         [Required(ErrorMessage = "Phonenumber required")]
         [DataType(DataType.PhoneNumber)]
-        //[RegularExpression(@"^\+[1-9]\d{1,14}$", ErrorMessage = "Please enter a valid phone number.")]
-        //[MaxLength(10)]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Please enter a valid 10-digit phone number.")]
         public string Phonenumber { get; set; }
 
         [Required(ErrorMessage = "DOB required")]
@@ -52,7 +63,7 @@ namespace Zencareservice.Models
 
         public DateTime Dob { get; set; }
 
-        public string Randomcode { get; set; }
+        public string Randomcode { get ; set ; }
         public int Status { get; set; }
 
 

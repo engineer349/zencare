@@ -513,6 +513,10 @@
       "PackagePath": "staticwebassets\\assets\\vendor\\swiper\\swiper-bundle.min.js.map"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\code\\SubjectMail.html",
+      "PackagePath": "staticwebassets\\code\\SubjectMail.html"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\Verifyotp.css",
       "PackagePath": "staticwebassets\\css\\Verifyotp.css"
     },
@@ -525,6 +529,10 @@
       "PackagePath": "staticwebassets\\css\\dashboardstyles.css"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\demo.css",
+      "PackagePath": "staticwebassets\\css\\demo.css"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\loginstyle.css",
       "PackagePath": "staticwebassets\\css\\loginstyle.css"
     },
@@ -535,6 +543,10 @@
     {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\style.css",
+      "PackagePath": "staticwebassets\\css\\style.css"
     },
     {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\dist\\css\\adminlte.css",
