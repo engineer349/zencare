@@ -13,6 +13,10 @@ namespace Zencareservice.Controllers
             _logger = logger;
         }
 
+        public IActionResult CapturePhoto()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();

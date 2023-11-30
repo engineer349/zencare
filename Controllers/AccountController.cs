@@ -32,7 +32,9 @@ namespace Zencareservice.Controllers
         
         public IActionResult Index()
         {
-            return View();
+            ViewBag.Message = "Your Details are successfully saved!";
+
+            return View("RegistrationSuccess","Account");
         }
 
         public bool IsOtpValid(string enteredOtp)
@@ -58,14 +60,21 @@ namespace Zencareservice.Controllers
           
             string enteredOtp = model.numeric1 +""+model.numeric2+ ""+model.numeric3+""+model.numeric4 +""+model.numeric5;
 
-            string _genotp = ViewData["key"].ToString();
-
-            if(Convert.ToInt64(enteredOtp) ==  _generatedOtp)
+ 
+            if (TempData.TryGetValue("MyData", out var myData))
             {
-                return View("Login", "Account");
+              
+                ViewBag.Message = myData;
+
+                string _genotp = Convert.ToString(ViewBag.Message);
+
+                if (Convert.ToInt64(enteredOtp) == Convert.ToInt64(_genotp))
+                {
+                    return RedirectToAction("Index", "Account");
+                }
+
             }
 
-            // OTP is not valid, handle accordingly
             return View("Login");
            
         }
@@ -76,27 +85,44 @@ namespace Zencareservice.Controllers
         {
             return View();
         }
-        public IActionResult ResetPassword()
-        {
-           
-            return View();
-        }
-        private IActionResult PasswordConfirmation()
-        {
 
+       public IActionResult ResetPassword()
+        {
+            return View();
+        }        
+
+        public IActionResult ForgotPassword()
+        {
+            
             return View();
         }
         [HttpPost]
         public IActionResult ResetPassword(Signup Obj)
         {
-            string ResetEmail = Obj.Email;
+            string ResetPassword = Obj.RPassword;
+            string ConfirmResetPassword = Obj.CRPassword;
+            if (!string.IsNullOrEmpty(Obj.RPassword) && !string.IsNullOrEmpty(Obj.CRPassword))
+            {
+               DataAccess Obj_DataAccess = new DataAccess();
+               DataSet ds = new DataSet();
+                ds = Obj_DataAccess.ResetPassword(Obj);
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ForgotPassword(Signup obj)
+        {
+            string ResetEmail = obj.Email;
 
             if(ResetEmail!=null)
             {
-                return View("PasswordConfirmation","Account");
+                
+                return RedirectToAction("ResetPassword", "Account");
             }
 
-            return View("Index", "Home");
+            return View();
          
             
         }
@@ -133,24 +159,95 @@ namespace Zencareservice.Controllers
         [HttpPost]
         public IActionResult Register(Signup Obj)
         {
-                //Random random = new Random();
+                Random random = new Random();
 
                 //// Generate a random 5-digit code
-                //int randomCode = random.Next(10000, 100000);
-                //_generatedOtp = randomCode;
-
-               
-
+                int randomCode = random.Next(10000, 100000);
+                _generatedOtp = randomCode;
+                TempData["MyData"] = _generatedOtp;
+                string fname = Obj.Firstname;
                 string email = Obj.Email;
+                ViewData["email"] = email;
                 SendMail sendMail = new SendMail();
                 SmtpClient client = new SmtpClient();    
-                string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", Obj.Email, "lamubclwmhfjwjjs", "Autoverification", "Your Zencareservice signup Account OTP verification of Email is" , "smtp.gmail.com", 587);
+                string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", Obj.Email, "lamubclwmhfjwjjs", "Autoverification", $@"
+
+
+
+<!DOCTYPE html>
+
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+    <title>Email Verification</title>
+    <style>
+        body {{
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }}
+
+        .logo {{
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+        }}
+
+        .verification-container {{
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }}
+
+        .verification-code {{
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 20px;
+        }}
+
+        .verification-instructions {{
+            color: #555;
+            margin-bottom: 20px;
+        }}
+
+        .verification-btn {{
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }}
+    </style>
+</head>
+<body>
+    <img src=""~/images/zencare-logo1.png"" alt=""Your Logo"" class=""logo"">
+    <div class=""verification-container"">
+        
+        <h2>Hi {fname},</p>
+        <p>Thank you for using Zenhealthcareservice! To ensure the security of your account, we have generated a One-Time Password (OTP) for you.</p>
+        <p class=""verification-code"">Your Verification Code:{_generatedOtp}</p>
+        <p class=""verification-instructions"">Please use the above code to verify your email address.</p>
+        
+    </div>
+</body>
+</html>" , "smtp.gmail.com", 587);
                 
                if (Obj.Email != null && mail =="Success")
                 {
 
 
-                string fname = Obj.Firstname;
+              
                 string lname = Obj.Lastname;
 
                 string password = Obj.Password;

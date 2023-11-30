@@ -77,6 +77,7 @@ namespace Zencareservice
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
 
             var app = builder.Build();
 
@@ -139,7 +140,7 @@ namespace Zencareservice
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=ForgotPassword}/{id?}");
 
                 //endpoints.MapControllerRoute(
                 //    name: "subProject1",

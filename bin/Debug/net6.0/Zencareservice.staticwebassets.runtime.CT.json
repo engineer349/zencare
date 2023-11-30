@@ -1183,6 +1183,20 @@
         "Asset": null,
         "Patterns": null
       },
+      "code": {
+        "Children": {
+          "SubjectMail.html": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "code/SubjectMail.html"
+            },
+            "Patterns": null
+          }
+        },
+        "Asset": null,
+        "Patterns": null
+      },
       "css": {
         "Children": {
           "calendarscheduler.css": {
@@ -1198,6 +1212,14 @@
             "Asset": {
               "ContentRootIndex": 0,
               "SubPath": "css/dashboardstyles.css"
+            },
+            "Patterns": null
+          },
+          "demo.css": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "css/demo.css"
             },
             "Patterns": null
           },
@@ -1222,6 +1244,22 @@
             "Asset": {
               "ContentRootIndex": 0,
               "SubPath": "css/site.css"
+            },
+            "Patterns": null
+          },
+          "style.css": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "css/style.css"
+            },
+            "Patterns": null
+          },
+          "Verifyotp.css": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "css/Verifyotp.css"
             },
             "Patterns": null
           }
@@ -1703,6 +1741,20 @@
         },
         "Patterns": null
       },
+      "forms": {
+        "Children": {
+          "Contact.php": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "forms/Contact.php"
+            },
+            "Patterns": null
+          }
+        },
+        "Asset": null,
+        "Patterns": null
+      },
       "icons": {
         "Children": {
           "daypilot.svg": {
@@ -1786,6 +1838,14 @@
             "Asset": {
               "ContentRootIndex": 0,
               "SubPath": "js/site.js"
+            },
+            "Patterns": null
+          },
+          "verifyotp.js": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "js/verifyotp.js"
             },
             "Patterns": null
           }

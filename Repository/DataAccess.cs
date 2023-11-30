@@ -82,5 +82,32 @@ namespace Zencareservice.Repository
                 throw ex;
             }
         }
+
+        public DataSet ResetPassword(Signup Obj)
+        {
+
+            try
+            {
+                DataSet ds = new DataSet();
+                string StrSPName = "UpdatePassword_SP";
+
+                SqlParameter[] param = new SqlParameter[3];
+                param[0] = new SqlParameter("@Email", SqlDbType.NVarChar);
+                param[0].Value = Obj.Email;
+                param[1] = new SqlParameter("@Uname", SqlDbType.NVarChar);
+                param[1].Value = Obj.RPassword;
+                param[2] = new SqlParameter("@Pass", SqlDbType.NVarChar);
+                param[2].Value = Obj.CRPassword;
+
+                ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
+
+                return ds;
+            }
+
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

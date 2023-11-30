@@ -97,7 +97,14 @@
 </section>
      
 </form>
-
+@section Scripts {
+    <script>
+        var alertMessage = '@ViewData["Message"]';
+        if (alertMessage) {
+            alert(alertMessage);
+        }
+    </script>
+}
     <!-- Analytics -->
 
 	</body>

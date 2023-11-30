@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Zencareservice.Models
 {
@@ -12,5 +13,8 @@ namespace Zencareservice.Models
 
         [Required]
         public string Password { get; set; }
+
+        
+        public string CRPassword { get; set; }
     }
 }

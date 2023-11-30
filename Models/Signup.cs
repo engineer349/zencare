@@ -47,10 +47,27 @@ namespace Zencareservice.Models
         public string Confirmpassword { get; set; }
 
 
+       
+
+        [Required(ErrorMessage = "Password required")]
+        [DataType(DataType.Password)]
+        [RegularExpression(PasswordRegexPattern, ErrorMessage = "Password must be alphanumeric with at least one special character and be 8 to 16 characters long.")]
+        public string RPassword { get; set; }
+
+        [NotMapped]
+        [Required(ErrorMessage = "Confirm Password required")]
+        [CompareAttribute("Password", ErrorMessage = "Password doesn't match.")]
+        [RegularExpression(PasswordRegexPattern, ErrorMessage = "Password must be alphanumeric with at least one special character and be 8 to 16 characters long.")]
+
+        public string CRPassword { get; set; }
+
+
+
         [Required(ErrorMessage = "Enter Username")]
         [StringLength(10, MinimumLength = 6, ErrorMessage = "Username must be between 6 and  10 characters.")]
 
         public string Username { get; set; }
+
 
 
         [Required(ErrorMessage = "Phonenumber required")]
