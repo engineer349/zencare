@@ -72,7 +72,9 @@ namespace Zencareservice.Controllers
                 {
                     return RedirectToAction("Index", "Account");
                 }
-
+                var captchaData = CaptchaGenerator.GenerateCaptchaImage();
+                TempData["CaptchaCode"] = captchaData.Item1;
+                return View(captchaData.Item2);
             }
 
             return View("Login");
@@ -96,11 +98,18 @@ namespace Zencareservice.Controllers
             
             return View();
         }
+
+  
+       
+
+
         [HttpPost]
         public IActionResult ResetPassword(Signup Obj)
         {
             string ResetPassword = Obj.RPassword;
             string ConfirmResetPassword = Obj.CRPassword;
+            string ResetEmail = ViewBag.Message;
+          
             if (!string.IsNullOrEmpty(Obj.RPassword) && !string.IsNullOrEmpty(Obj.CRPassword))
             {
                DataAccess Obj_DataAccess = new DataAccess();
@@ -118,6 +127,7 @@ namespace Zencareservice.Controllers
 
             if(ResetEmail!=null)
             {
+                ViewBag.Message = ResetEmail;
                 
                 return RedirectToAction("ResetPassword", "Account");
             }

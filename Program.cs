@@ -140,7 +140,7 @@ namespace Zencareservice
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=ForgotPassword}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 //endpoints.MapControllerRoute(
                 //    name: "subProject1",

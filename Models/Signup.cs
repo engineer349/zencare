@@ -49,13 +49,13 @@ namespace Zencareservice.Models
 
        
 
-        [Required(ErrorMessage = "Password required")]
+        [Required(ErrorMessage = "ResetPassword required")]
         [DataType(DataType.Password)]
         [RegularExpression(PasswordRegexPattern, ErrorMessage = "Password must be alphanumeric with at least one special character and be 8 to 16 characters long.")]
         public string RPassword { get; set; }
 
         [NotMapped]
-        [Required(ErrorMessage = "Confirm Password required")]
+        [Required(ErrorMessage = "Confirm ResetPassword required")]
         [CompareAttribute("Password", ErrorMessage = "Password doesn't match.")]
         [RegularExpression(PasswordRegexPattern, ErrorMessage = "Password must be alphanumeric with at least one special character and be 8 to 16 characters long.")]
 
@@ -72,7 +72,7 @@ namespace Zencareservice.Models
 
         [Required(ErrorMessage = "Phonenumber required")]
         [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "Please enter a valid 10-digit phone number.")]
+        [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Please enter a valid 10-digit phone number using only numeric digits.")]
         public string Phonenumber { get; set; }
 
         [Required(ErrorMessage = "DOB required")]

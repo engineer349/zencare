@@ -1,4 +1,5 @@
 /* @extend display-flex; */
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap");
 display-flex, .display-flex, .display-flex-center, .signup-content, .signin-content, .social-login, .socials {
   display: flex;
   display: -webkit-flex; }
@@ -547,7 +548,10 @@ label.valid {
         /* box-sizing: border-box; */
         padding: 0 30px;
     }
-  
+    intl-tel-input,
+    .iti {
+        width: 100%;
+    }
 
   .signup-form, .signup-image, .signin-form, .signin-image {
     width: auto; }

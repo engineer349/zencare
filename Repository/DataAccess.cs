@@ -94,9 +94,9 @@ namespace Zencareservice.Repository
                 SqlParameter[] param = new SqlParameter[3];
                 param[0] = new SqlParameter("@Email", SqlDbType.NVarChar);
                 param[0].Value = Obj.Email;
-                param[1] = new SqlParameter("@Uname", SqlDbType.NVarChar);
+                param[1] = new SqlParameter("@RPassword", SqlDbType.NVarChar);
                 param[1].Value = Obj.RPassword;
-                param[2] = new SqlParameter("@Pass", SqlDbType.NVarChar);
+                param[2] = new SqlParameter("@CRPassword", SqlDbType.NVarChar);
                 param[2].Value = Obj.CRPassword;
 
                 ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
