@@ -54,7 +54,35 @@ namespace Zencareservice.Repository
             catch (SqlException ex)
             {                
                 throw ex;
+                
             }
+
+
+        }
+
+        public DataSet CheckEmail(Signup Obj)
+        {
+
+            try
+            {
+                DataSet ds = new DataSet();
+                string StrSPName = "CheckEmail_SP";
+
+                SqlParameter[] param = new SqlParameter[1];
+
+                param[0] = new SqlParameter("@Email", SqlDbType.NVarChar);
+                param[0].Value = Obj.Email;
+
+                ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
+
+                return ds;
+            }
+            catch(SqlException ex)
+            {
+                throw ex;
+            }
+            
+           
         }
 
         public DataSet SaveLogin(Login Obj)
@@ -83,7 +111,7 @@ namespace Zencareservice.Repository
             }
         }
 
-        public DataSet ResetPassword(Signup Obj)
+        public DataSet ResetPassword(Signup Obj, String ResetMail)
         {
 
             try
@@ -93,7 +121,7 @@ namespace Zencareservice.Repository
 
                 SqlParameter[] param = new SqlParameter[3];
                 param[0] = new SqlParameter("@Email", SqlDbType.NVarChar);
-                param[0].Value = Obj.Email;
+                param[0].Value = ResetMail;
                 param[1] = new SqlParameter("@RPassword", SqlDbType.NVarChar);
                 param[1].Value = Obj.RPassword;
                 param[2] = new SqlParameter("@CRPassword", SqlDbType.NVarChar);

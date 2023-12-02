@@ -41,8 +41,11 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" asp-for="Email" id="email" pattern="[a-zA-Z0-9._%+-]+(gmail\.com|yahoo\.com|redhat\.com|[a-zA-Z0-9.-]+\.(com|edu|org))" title="Please enter a valid email address" placeholder="Your Email" required />
-                                <span asp-validation-for="Email" class="text-danger"></span>                                 
+                               <input type="email" asp-for="Email" id="email" pattern="[a-zA-Z0-9._%+-]+(gmail\.com|yahoo\.com|redhat\.com|[a-zA-Z0-9.-]+\.(com|edu|org))" title="Please enter a valid email address" placeholder="Your Email" required />
+                             </div>
+                             <div class="form-group">
+                               <button type="submit" name="VerifyEmail" asp-action="VerifyEmail" asp-controller="Account" class="btn btn-primary" onclick="Verifyemail()">VerifyEmail</button>
+                                <span asp-validation-for="Email" class="text-danger">@TempData["Email"]</span>
                             </div>                         
                             <div class="form-group">
                                 <label asp-for="Password"><i class="zmdi zmdi-lock"></i></label>
@@ -103,6 +106,7 @@
      </script>
 
 
+   
   <script type="text/javascript">
     function validateForm() {
         // Validate Firstname

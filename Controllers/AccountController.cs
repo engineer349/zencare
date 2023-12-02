@@ -11,6 +11,9 @@ using Zencareservice.Models;
 using Zencareservice.Repository;
 using System;
 using System.IO;
+using System.Net;
+using System.Data.SqlTypes;
+using System.Text.RegularExpressions;
 
 namespace Zencareservice.Controllers
 {
@@ -19,22 +22,17 @@ namespace Zencareservice.Controllers
 
         //private readonly TwilioService _twilioService;
 
-        //public AccountController(IConfiguration configuration)
-        //{
-        //    var twilioConfig = configuration.GetSection("Twilio");
-        //    _twilioService = new TwilioService(
-        //        twilioConfig["AccountSid"],
-        //        twilioConfig["AuthToken"],
-        //        twilioConfig["PhoneNumber"]
-        //    );
-        //}
+
         private int _generatedOtp;
-        
+
+        private string ResetEmail;
+
         public IActionResult Index()
         {
+
             ViewBag.Message = "Your Details are successfully saved!";
 
-            return View("RegistrationSuccess","Account");
+            return View("RegistrationSuccess", "Account");
         }
 
         public bool IsOtpValid(string enteredOtp)
@@ -49,6 +47,35 @@ namespace Zencareservice.Controllers
             return false;
         }
 
+        public IActionResult VerifyEmail(Signup Obj)
+        {
+
+                string validemail = Obj.Email;
+
+                string email = "example@example.com";
+
+                string emailPattern = @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
+
+                Regex regex = new Regex(emailPattern);
+
+               if (validemail != null && regex.IsMatch(email))
+               {
+                    TempData["Email"] = "Validuser";
+
+                return RedirectToAction("Register", "Account");
+               }
+                
+              else
+              {
+                TempData["Email"] = "Validuser";
+
+               }
+                return View("Register");
+
+ 
+
+        }
+
         public IActionResult VerifyOtp(Signup Obj)
         {
             return View();
@@ -57,8 +84,20 @@ namespace Zencareservice.Controllers
      
         public IActionResult ValidateOtp(Signup model)
         {
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.Append(model.numeric1);
+            stringBuilder.Append(model.numeric2);
+            stringBuilder.Append(model.numeric3);
+            stringBuilder.Append(model.numeric4);
+            stringBuilder.Append(model.numeric5);
           
-            string enteredOtp = model.numeric1 +""+model.numeric2+ ""+model.numeric3+""+model.numeric4 +""+model.numeric5;
+
+            string enteredOtp = stringBuilder.ToString();
+
+
+            //string enteredOtp = model.numeric1 +""+model.numeric2+ ""+model.numeric3+""+model.numeric4 +""+model.numeric5;
 
  
             if (TempData.TryGetValue("MyData", out var myData))
@@ -72,9 +111,7 @@ namespace Zencareservice.Controllers
                 {
                     return RedirectToAction("Index", "Account");
                 }
-                var captchaData = CaptchaGenerator.GenerateCaptchaImage();
-                TempData["CaptchaCode"] = captchaData.Item1;
-                return View(captchaData.Item2);
+              
             }
 
             return View("Login");
@@ -99,24 +136,28 @@ namespace Zencareservice.Controllers
             return View();
         }
 
-  
-       
-
 
         [HttpPost]
         public IActionResult ResetPassword(Signup Obj)
         {
             string ResetPassword = Obj.RPassword;
             string ConfirmResetPassword = Obj.CRPassword;
-            string ResetEmail = ViewBag.Message;
-          
-            if (!string.IsNullOrEmpty(Obj.RPassword) && !string.IsNullOrEmpty(Obj.CRPassword))
+           
+            if (TempData.TryGetValue("ResetData", out var myresetData))
             {
-               DataAccess Obj_DataAccess = new DataAccess();
-               DataSet ds = new DataSet();
-                ds = Obj_DataAccess.ResetPassword(Obj);
+                ViewBag.Message = myresetData;
+                
+                string ResetEmail = Convert.ToString(ViewBag.Message);
+            
+                string AllData = Convert.ToString(ViewBag.AllData);
+                
+                if (!string.IsNullOrEmpty(Obj.RPassword) && !string.IsNullOrEmpty(Obj.CRPassword))
+                {
+                    DataAccess Obj_DataAccess = new DataAccess();
+                    DataSet ds = new DataSet();
+                    ds = Obj_DataAccess.ResetPassword(Obj, ResetEmail);
+                }
             }
-
             return View();
         }
 
@@ -127,7 +168,7 @@ namespace Zencareservice.Controllers
 
             if(ResetEmail!=null)
             {
-                ViewBag.Message = ResetEmail;
+                TempData["ResetData"] = ResetEmail;
                 
                 return RedirectToAction("ResetPassword", "Account");
             }
@@ -137,6 +178,8 @@ namespace Zencareservice.Controllers
             
         }
 
+       
+
         public IActionResult Login() 
         {
             return View();
@@ -144,7 +187,7 @@ namespace Zencareservice.Controllers
 
         public IActionResult ResendEmail(Signup Obj)
         {
-            Register();
+           
 
             Random random = new Random();
             // Generate a random 5-digit code
@@ -169,18 +212,31 @@ namespace Zencareservice.Controllers
         [HttpPost]
         public IActionResult Register(Signup Obj)
         {
-                Random random = new Random();
+            
+            string fname = Obj.Firstname;
+            string email = Obj.Email; 
+            string lname = Obj.Lastname;
+            string password = Obj.Password;
+            string confirmpassword = Obj.Confirmpassword;
+            string username = Obj.Username;
+            string phoneno = Obj.Phonenumber;
 
-                //// Generate a random 5-digit code
+            Random random = new Random();
+
+            //// Generate a random 5-digit code
+            ///
+            if(!String.IsNullOrEmpty(email) )
+            {
+
                 int randomCode = random.Next(10000, 100000);
                 _generatedOtp = randomCode;
                 TempData["MyData"] = _generatedOtp;
-                string fname = Obj.Firstname;
-                string email = Obj.Email;
-                ViewData["email"] = email;
-                SendMail sendMail = new SendMail();
-                SmtpClient client = new SmtpClient();    
-                string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", Obj.Email, "lamubclwmhfjwjjs", "Autoverification", $@"
+               
+            }
+          
+            SendMail sendMail = new SendMail();
+            SmtpClient client = new SmtpClient();    
+            string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", Obj.Email, "lamubclwmhfjwjjs", "Autoverification", $@"
 
 
 
@@ -252,22 +308,12 @@ namespace Zencareservice.Controllers
     </div>
 </body>
 </html>" , "smtp.gmail.com", 587);
-                
-               if (Obj.Email != null && mail =="Success")
-                {
 
+            if (mail =="Success")
+            {
 
-              
-                string lname = Obj.Lastname;
-
-                string password = Obj.Password;
-                string confirmpassword = Obj.Confirmpassword;
-                string username = Obj.Username;
-                string phoneno = Obj.Phonenumber;
                 Obj.Status = 1;
                 Obj.Role = "Patient";
-
-
                 DataAccess Obj_DataAccess = new DataAccess();
                 DataSet ds = new DataSet();
                 ds = Obj_DataAccess.SaveRegister(Obj);
@@ -275,53 +321,11 @@ namespace Zencareservice.Controllers
                 return RedirectToAction("VerifyOtp", "Account");
             }
                 
-               
-
                 return RedirectToAction("Login", "Account");
-               
-            // Generate OTP and send it to the user's mobile phone
-            // string generatedOtp = _twilioService.SendOtp(Obj.Phonenumber);
-
-            // Save the generatedOtp to associate it with the user's profile
-
-            // Pass the generatedOtp to the verification view
-            // return RedirectToAction("VerifyOtp", new { generatedOtp })
-           
+              
 
         }
 
-     
-       
-
-        //[HttpGet]
-        //public IActionResult VerifyOtp(string generatedOtp)
-        //{
-        //    // Pass the generatedOtp to the view for user verification
-        //    var model = new VerifyOtpViewModel { GeneratedOtp = generatedOtp };
-        //    return View(model);
-        //}
-
-        //[HttpPost]
-        //public IActionResult VerifyOtp(VerifyOtpViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        // Verify the user-entered OTP
-        //        bool isOtpValid = _twilioService.VerifyOtp(model.UserEnteredOtp);
-
-        //        if (isOtpValid)
-        //        {
-        //            // OTP is valid, complete the registration process
-        //            return RedirectToAction("RegistrationSuccess");
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("UserEnteredOtp", "Invalid OTP");
-        //        }
-        //    }
-
-        //    return View(model);
-        //}
 
         public IActionResult RegistrationSuccess()
         {
@@ -364,7 +368,6 @@ namespace Zencareservice.Controllers
                         CookieOptions options = new CookieOptions();
                         options.Expires = DateTime.Now.AddMinutes(5);
                         Response.Cookies.Append("UsrName", UserName, options);
-
                         CookieOptions options1 = new CookieOptions();
                         options.Expires = DateTime.Now.AddMinutes(5);
                         Response.Cookies.Append("UsrId", UsrId, options1);
