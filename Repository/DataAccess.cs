@@ -42,8 +42,7 @@ namespace Zencareservice.Repository
                 param[8].Value = Obj.Status;
                 param[9] = new SqlParameter("@Role", SqlDbType.VarChar);
                 param[9].Value = Obj.Role;
-                
-
+               
 
 
                 ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);

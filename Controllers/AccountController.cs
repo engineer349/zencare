@@ -14,9 +14,11 @@ using System.IO;
 using System.Net;
 using System.Data.SqlTypes;
 using System.Text.RegularExpressions;
+using System.Data.Entity.Infrastructure;
 
 namespace Zencareservice.Controllers
 {
+
     public class AccountController : Controller
     {
 
@@ -26,6 +28,8 @@ namespace Zencareservice.Controllers
         private int _generatedOtp;
 
         private string ResetEmail;
+
+       
 
         public IActionResult Index()
         {
@@ -47,10 +51,10 @@ namespace Zencareservice.Controllers
             return false;
         }
 
-        public IActionResult VerifyEmail(Signup Obj)
+        public IActionResult VerifyEmail(Signup model)
         {
 
-                string validemail = Obj.Email;
+                string validemail = model.Email;
 
                 string email = "example@example.com";
 
@@ -67,7 +71,7 @@ namespace Zencareservice.Controllers
                 
               else
               {
-                TempData["Email"] = "Validuser";
+                TempData["Email"] = "Invaliduser";
 
                }
                 return View("Register");
@@ -122,7 +126,12 @@ namespace Zencareservice.Controllers
    
         public IActionResult Register()
         {
-            return View();
+
+            var roles = new Signup
+            {
+                Roles = GetRole()
+            };
+            return View(roles);
         }
 
        public IActionResult ResetPassword()
@@ -184,11 +193,22 @@ namespace Zencareservice.Controllers
         {
             return View();
         }
+        private List<SelectListItem> GetRole()
+        {
+            // Replace this with your logic to retrieve the list of items from the database or any other source
+            var roles = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "Patient", Text = "Patient" },
+                new SelectListItem { Value = "Doctor", Text = "Doctor" },
+                new SelectListItem { Value = "Staff", Text = "Staff" },
+                // Add more items as needed
+            };
 
+            return roles;
+        }
         public IActionResult ResendEmail(Signup Obj)
         {
            
-
             Random random = new Random();
             // Generate a random 5-digit code
             int randomCode = random.Next(10000, 100000);
@@ -207,121 +227,321 @@ namespace Zencareservice.Controllers
         {
             return View();
         }
-        
+        private bool IsDateOfBirthValid(DateTime dob)
+        {
+            // Ensure the user is at least 18 years old
+            return dob.AddYears(18) <= DateTime.Now && dob > DateTime.Now.AddYears(-100); // Assuming a reasonable upper limit for age
+        }
 
         [HttpPost]
         public IActionResult Register(Signup Obj)
         {
-            
-            string fname = Obj.Firstname;
-            string email = Obj.Email; 
-            string lname = Obj.Lastname;
-            string password = Obj.Password;
-            string confirmpassword = Obj.Confirmpassword;
-            string username = Obj.Username;
-            string phoneno = Obj.Phonenumber;
 
-            Random random = new Random();
-
-            //// Generate a random 5-digit code
-            ///
-            if(!String.IsNullOrEmpty(email) )
+            if (ModelState.IsValid)
             {
+                // Perform additional validation
+                if (IsDateOfBirthValid(Obj.Dob))
+                {
+                    bool agreeToTerms = Obj.agreeterm;
 
-                int randomCode = random.Next(10000, 100000);
-                _generatedOtp = randomCode;
-                TempData["MyData"] = _generatedOtp;
-               
+                    if (agreeToTerms == true)
+                    {
+                        string validemail = Obj.Email;
+
+                        string email = "example@example.com";
+
+                        string emailPattern = @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
+
+                        Regex regex = new Regex(emailPattern);
+
+                        if (validemail != null && regex.IsMatch(email))
+                        {
+
+                            try
+                            {
+
+
+                                TempData["Email"] = "Validuser";
+                                string fname = Obj.Firstname;
+                                string lname = Obj.Lastname;
+                                string password = Obj.Password;
+                                string confirmpassword = Obj.Confirmpassword;
+                                string username = Obj.Username;
+                                string phoneno = Obj.Phonenumber;
+
+                                Random random = new Random();
+
+                                if (!String.IsNullOrEmpty(email))
+                                {
+
+                                    int randomCode = random.Next(10000, 100000);
+                                    _generatedOtp = randomCode;
+                                    TempData["MyData"] = _generatedOtp;
+
+                                }
+
+                                SendMail sendMail = new SendMail();
+                                SmtpClient client = new SmtpClient();
+
+                                string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", Obj.Email, "lamubclwmhfjwjjs", "Autoverification", $@"
+
+
+
+                        <!DOCTYPE html>
+
+                        <html lang=""en"">
+                        <head>
+                            <meta charset=""UTF-8"">
+                            <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+                            <title>Email Verification</title>
+                            <style>
+                                body {{
+                                    font-family: Arial, sans-serif;
+                                    margin: 0;
+                                    padding: 0;
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: center;
+                                    align-items: center;
+                                    height: 100vh;
+                                    background-color: #f4f4f4;
+                                }}
+
+                                .logo {{
+                                    max-width: 200px;
+                                    height: auto;
+                                    margin-bottom: 20px;
+                                }}
+
+                                .verification-container {{
+                                    background-color: #fff;
+                                    padding: 20px;
+                                    border-radius: 5px;
+                                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                                    text-align: center;
+                                }}
+
+                                .verification-code {{
+                                    font-size: 24px;
+                                    font-weight: bold;
+                                    color: #007bff;
+                                    margin-bottom: 20px;
+                                }}
+
+                                .verification-instructions {{
+                                    color: #555;
+                                    margin-bottom: 20px;
+                                }}
+
+                                .verification-btn {{
+                                    padding: 10px;
+                                    background-color: #007bff;
+                                    color: #fff;
+                                    border: none;
+                                    border-radius: 5px;
+                                    cursor: pointer;
+                                }}
+                            </style>
+                        </head>
+                        <body>
+                            <img src=""~/images/zencare-logo1.png"" alt=""Your Logo"" class=""logo"">
+                            <div class=""verification-container"">
+        
+                                <h2>Hi {fname},</p>
+                                <p>Thank you for using Zenhealthcareservice! To ensure the security of your account, we have generated a One-Time Password (OTP) for you.</p>
+                                <p class=""verification-code"">Your Verification Code:{_generatedOtp}</p>
+                                <p class=""verification-instructions"">Please use the above code to verify your email address.</p>
+        
+                            </div>
+                        </body>
+                        </html>", "smtp.gmail.com", 587);
+
+                                if (mail == "Success")
+                                {
+
+                                    Obj.Status = 1;
+                                    DataAccess Obj_DataAccess = new DataAccess();
+                                    DataSet ds = new DataSet();
+                                    ds = Obj_DataAccess.SaveRegister(Obj);
+
+                                    return RedirectToAction("VerifyOtp", "Account");
+                                }
+
+
+
+
+
+                            }
+                            catch (Exception ex)
+                            {
+                                string msg = ex.Message.ToString();
+                                  ViewBag.Message = msg;  
+                            }
+                        }
+                        else
+                        {
+                            TempData["Email"] = "InvalidUser";
+                            return View();
+
+                        }
+
+                        }
+                    else
+                    {
+                        ModelState.AddModelError(nameof(Signup.agreeterm), "Pls  agree to terms of service and condition.");
+                    }
+
+                    }
+                    else
+                    {
+                    ModelState.AddModelError(nameof(Signup.Dob), "User must be at least 18 years old.");
+                }
             }
+
           
-            SendMail sendMail = new SendMail();
-            SmtpClient client = new SmtpClient();    
-            string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", Obj.Email, "lamubclwmhfjwjjs", "Autoverification", $@"
+
+
+              
+            //    string validemail = Obj.Email;
+
+            //    string email = "example@example.com";
+
+            //    string selectedrole = Obj.Role;
+
+            //    string emailPattern = @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
+
+            //    Regex regex = new Regex(emailPattern);
+            //try
+            //{
+            //    if (validemail != null && regex.IsMatch(email))
+            //    {
+                   // TempData["Email"] = "Validuser";
+//                    string fname = Obj.Firstname;               
+//                    string lname = Obj.Lastname;
+//                    string password = Obj.Password;
+//                    string confirmpassword = Obj.Confirmpassword;
+//                    string username = Obj.Username;
+//                    string phoneno = Obj.Phonenumber;
+                   
+//                    Random random = new Random();
+
+//                    //// Generate a random 5-digit code
+//                    ///
+//                    if (!String.IsNullOrEmpty(email))
+//                    {
+
+//                        int randomCode = random.Next(10000, 100000);
+//                        _generatedOtp = randomCode;
+//                        TempData["MyData"] = _generatedOtp;
+
+//                    }
+
+//                    SendMail sendMail = new SendMail();
+//                    SmtpClient client = new SmtpClient();
+
+//                    string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", Obj.Email, "lamubclwmhfjwjjs", "Autoverification", $@"
 
 
 
-<!DOCTYPE html>
+//<!DOCTYPE html>
 
-<html lang=""en"">
-<head>
-    <meta charset=""UTF-8"">
-    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
-    <title>Email Verification</title>
-    <style>
-        body {{
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }}
+//<html lang=""en"">
+//<head>
+//    <meta charset=""UTF-8"">
+//    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+//    <title>Email Verification</title>
+//    <style>
+//        body {{
+//            font-family: Arial, sans-serif;
+//            margin: 0;
+//            padding: 0;
+//            display: flex;
+//            flex-direction: column;
+//            justify-content: center;
+//            align-items: center;
+//            height: 100vh;
+//            background-color: #f4f4f4;
+//        }}
 
-        .logo {{
-            max-width: 200px;
-            height: auto;
-            margin-bottom: 20px;
-        }}
+//        .logo {{
+//            max-width: 200px;
+//            height: auto;
+//            margin-bottom: 20px;
+//        }}
 
-        .verification-container {{
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }}
+//        .verification-container {{
+//            background-color: #fff;
+//            padding: 20px;
+//            border-radius: 5px;
+//            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+//            text-align: center;
+//        }}
 
-        .verification-code {{
-            font-size: 24px;
-            font-weight: bold;
-            color: #007bff;
-            margin-bottom: 20px;
-        }}
+//        .verification-code {{
+//            font-size: 24px;
+//            font-weight: bold;
+//            color: #007bff;
+//            margin-bottom: 20px;
+//        }}
 
-        .verification-instructions {{
-            color: #555;
-            margin-bottom: 20px;
-        }}
+//        .verification-instructions {{
+//            color: #555;
+//            margin-bottom: 20px;
+//        }}
 
-        .verification-btn {{
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }}
-    </style>
-</head>
-<body>
-    <img src=""~/images/zencare-logo1.png"" alt=""Your Logo"" class=""logo"">
-    <div class=""verification-container"">
+//        .verification-btn {{
+//            padding: 10px;
+//            background-color: #007bff;
+//            color: #fff;
+//            border: none;
+//            border-radius: 5px;
+//            cursor: pointer;
+//        }}
+//    </style>
+//</head>
+//<body>
+//    <img src=""~/images/zencare-logo1.png"" alt=""Your Logo"" class=""logo"">
+//    <div class=""verification-container"">
         
-        <h2>Hi {fname},</p>
-        <p>Thank you for using Zenhealthcareservice! To ensure the security of your account, we have generated a One-Time Password (OTP) for you.</p>
-        <p class=""verification-code"">Your Verification Code:{_generatedOtp}</p>
-        <p class=""verification-instructions"">Please use the above code to verify your email address.</p>
+//        <h2>Hi {fname},</p>
+//        <p>Thank you for using Zenhealthcareservice! To ensure the security of your account, we have generated a One-Time Password (OTP) for you.</p>
+//        <p class=""verification-code"">Your Verification Code:{_generatedOtp}</p>
+//        <p class=""verification-instructions"">Please use the above code to verify your email address.</p>
         
-    </div>
-</body>
-</html>" , "smtp.gmail.com", 587);
+//    </div>
+//</body>
+//</html>", "smtp.gmail.com", 587);
 
-            if (mail =="Success")
-            {
+//                    if (mail == "Success")
+//                    {
 
-                Obj.Status = 1;
-                Obj.Role = "Patient";
-                DataAccess Obj_DataAccess = new DataAccess();
-                DataSet ds = new DataSet();
-                ds = Obj_DataAccess.SaveRegister(Obj);
+//                        Obj.Status = 1;
+//                        //Obj.Role = "Patient";
+//                        DataAccess Obj_DataAccess = new DataAccess();
+//                        DataSet ds = new DataSet();
+//                        ds = Obj_DataAccess.SaveRegister(Obj);
 
-                return RedirectToAction("VerifyOtp", "Account");
-            }
-                
-                return RedirectToAction("Login", "Account");
+//                        return RedirectToAction("VerifyOtp", "Account");
+//                    }
+
+            //        return RedirectToAction("Register", "Account");
+
+            //    }
+
+            //    else
+            //    {
+            //        TempData["Email"] = "Invaliduser";
+
+
+            //    }
+            //}
+
+            //catch (Exception ex)
+            //{
+            //    string msg = ex.Message.ToString();
+            //    ViewBag.Message = msg;  
+            //}
+            return View();
               
 
         }
@@ -357,7 +577,7 @@ namespace Zencareservice.Controllers
                         string UsrId = ds.Tables[0].Rows[0]["RId"].ToString();
                         string UserName = ds.Tables[0].Rows[0]["Username"].ToString();
                         string Email = ds.Tables[0].Rows[0]["Email"].ToString();
-
+                        string Role = ds.Tables[0].Rows[0]["Role"].ToString();
                         var cookieOptions = new CookieOptions
                         {
                             Expires = DateTime.Now.AddDays(1), // Set the expiration date
@@ -369,6 +589,9 @@ namespace Zencareservice.Controllers
                         options.Expires = DateTime.Now.AddMinutes(5);
                         Response.Cookies.Append("UsrName", UserName, options);
                         CookieOptions options1 = new CookieOptions();
+                        options.Expires = DateTime.Now.AddMinutes(5);
+                        Response.Cookies.Append("Role", UserName, options);
+                        CookieOptions options2 = new CookieOptions();
                         options.Expires = DateTime.Now.AddMinutes(5);
                         Response.Cookies.Append("UsrId", UsrId, options1);
 
