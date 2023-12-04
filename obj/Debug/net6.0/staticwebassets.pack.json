@@ -777,6 +777,14 @@
       "PackagePath": "staticwebassets\\forms\\Contact.php"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\forms\\mailsend.html",
+      "PackagePath": "staticwebassets\\forms\\mailsend.html"
+    },
+    {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\forms\\termsofservice.html",
+      "PackagePath": "staticwebassets\\forms\\termsofservice.html"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\icons\\daypilot.svg",
       "PackagePath": "staticwebassets\\icons\\daypilot.svg"
     },

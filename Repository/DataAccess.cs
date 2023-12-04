@@ -20,7 +20,7 @@ namespace Zencareservice.Repository
                 DataSet ds=new DataSet();
                 string StrSPName = "SaveRegister_SP";
                 
-                SqlParameter[] param = new SqlParameter[10];
+                SqlParameter[] param = new SqlParameter[11];
 
                 param[0] = new SqlParameter("@Firstname", SqlDbType.NVarChar);
                 param[0].Value = Obj.Firstname;
@@ -41,8 +41,9 @@ namespace Zencareservice.Repository
                 param[8] = new SqlParameter("@Status", SqlDbType.VarChar);
                 param[8].Value = Obj.Status;
                 param[9] = new SqlParameter("@Role", SqlDbType.VarChar);
-                param[9].Value = Obj.Role;
-               
+                param[9].Value = Obj.RoleId;
+                param[10] = new SqlParameter("@agreeterm", SqlDbType.VarChar);
+                param[10].Value = Convert.ToInt32(Obj.agreeterm);
 
 
                 ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);

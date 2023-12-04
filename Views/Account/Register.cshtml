@@ -21,20 +21,7 @@
     <link rel="stylesheet" href="~/css/termsofservice.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="~/js/dob.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var today = new Date();
-            var minDate = new Date(today.getFullYear() - 80, today.getMonth(), today.getDate());
-            var maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
-
-            $("#dob").datepicker({
-                minDate: minDate,
-                maxDate: maxDate
-            });
-        });
-    </script>
-
+ 
 </head>
 <body>
     <div class="main">
@@ -59,8 +46,9 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" asp-for="Email" class="form-control" id="email" pattern="[a-zA-Z0-9._%+-]+(gmail\.com|yahoo\.com|redhat\.com|[a-zA-Z0-9.-]+\.(com|edu|org))" title="Please enter a valid email address" placeholder="Your Email" required />
-                                <span asp-validation-for="Email" class="text-danger">@ViewBag.Message</span>
+                                <input type="email" asp-for="Email" class="form-control" id="email" pattern="^[a-zA-Z0-9._%+-]+[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Please enter a valid email address" placeholder="Your Email"  required />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                                
                             </div>                         
                             <div class="form-group">
                                 <label asp-for="Password"><i class="zmdi zmdi-lock"></i></label>
@@ -85,24 +73,26 @@
                                 <label asp-for="Dob"><i class="zmdi zmdi-date"></i></label>
                                 <input type="date" asp-for="Dob" id="dob" class="form-control" style="padding: 5px; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 10px;" placeholder="Date of Birth"  />
                                 <span asp-validation-for="Dob" class="text-danger"></span>
+                            </div>                         
+                            <div class="form-group">                     
+                               <select id="roleDropdown" name="RoleId" asp-items="ViewBag.Roles" class="form-control">
+                                    <option value="">-- Select Role --</option>
+                                </select>   
+                               
                             </div>
-                            <div class="form-group">
-                               <select asp-for="RoleId" asp-items="Model.Roles" class="form-control">
-                                <option>Please select one</option>
-                                </select>
-                              
-@*                                 @Html.DropDownList("Role", Model.Roles, "Please select one", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" }) *@
+                            <div>
+                                <span>@ViewBag.Message</span>
                             </div>
                             <div class="form-group">
                              
                                     <input type="checkbox" asp-for="agreeterm" id="agree-term" class="agree-term" required />
-                                    <label asp-for="agreeterm" class="agree-term">
+                                <label asp-for="agreeterm" class="label-agree-term">
                                         <span><span></span></span>
-                                        I agree all statements in  <a href="#"  data-toggle="modal" data-target="#termsModal">Terms of service</a>
+                                        I agree all statements in  <a href="~/forms/termsofservice.html"  data-toggle="modal" data-target="#termsModal">Terms of service</a>
                                     </label>
                                 </div>
-                            
+                            <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+
                             <div class="form-group form-button">
                                 <button type="submit" id="signup" class="form-submit btn btn-primary" onclick="validateForm()" name="Register">Register</button>
                             </div>
@@ -180,17 +170,37 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.js"></script>
  
     <script src="~/js/main.js"></script>
+    <script type="text/javascript"> 
+
+        $(document).ready(function () {
+            $('#email').on('blur', function () {
+                var emailAddress = $(this).val();
+
+                if (isValidEmailAddress(emailAddress)) {
+                    $('#email-validation-mark').addClass('active');
+                } else {
+                    $('#email-validation-mark').removeClass('active');
+                }
+            });
+
+            function isValidEmailAddress(emailAddress) {
+                // Implement email validation logic here
+                return true; // Replace with actual validation
+            }
+        });
+
+    </script>
   
-  <script type="text/javascript"> 
+<script type="text/javascript"> 
     function validateForm() {
 
-        var checkbox = document.getElementById("agree-term");
+        // var checkbox = document.getElementById("agree-term");
 
-        if (!checkbox.checked) 
-        {
-                swal("!Please agree to the Terms of Service.");
-                return false; // Prevent form submission
-        }
+        // if (!checkbox.checked) 
+        // {
+        //         swal("!Please agree to the Terms of Service.");
+        //         return false; // Prevent form submission
+        // }
         // Validate Firstname
         var firstname = document.getElementById("firstname").value.trim();
         if (firstname === "") {

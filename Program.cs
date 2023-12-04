@@ -9,15 +9,7 @@ builder.Services.AddSession(options =>
    options.Cookie.HttpOnly = true;
    options.Cookie.IsEssential = true;
 });
-//builder.Services.Configure<CookiePolicyOptions>(options =>
-//{
-//    options.CheckConsentNeeded = context => true;
-//    options.MinimumSameSitePolicy = SameSiteMode.None;
-//});
-builder.Services.ConfigureApplicationCookie(o => {
-   o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-   o.SlidingExpiration = true;
-});
+
 //// Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

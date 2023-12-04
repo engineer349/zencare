@@ -6,14 +6,9 @@ namespace Zencareservice.Models
 {
     public class Signup
     {
-        public int RoleId { get; set; }
 
-
-        [Required(ErrorMessage = "Please select the role")]
-        [DataType(DataType.Text)]
-        public List<SelectListItem> Roles { get; set; }
-
-        public string Role { get; set; }
+        public string RoleId { get; set; }
+        public string RoleName { get; set; }
 
         public string numeric1 { get; set; }
 
@@ -38,10 +33,10 @@ namespace Zencareservice.Models
 
         [Required(ErrorMessage = "Please enter Emailaddress")]
         [DataType(DataType.EmailAddress)]
-        [RegularExpression(@"^\S+@\S+\.\S+$", ErrorMessage = "Please enter a valid email address.")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Please enter a valid email address.")]
         public string Email { get; set; }
 
-        private const string PasswordRegexPattern = @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$";
+        private const string PasswordRegexPattern =@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$";
 
         [Required(ErrorMessage = "Password required")]
         [DataType(DataType.Password)]
@@ -71,8 +66,6 @@ namespace Zencareservice.Models
         [StringLength(10, MinimumLength = 6, ErrorMessage = "Username must be between 6 and  10 characters.")]
 
         public string Username { get; set; }
-
-
 
         [Required(ErrorMessage = "Phonenumber required")]
         [DataType(DataType.PhoneNumber)]

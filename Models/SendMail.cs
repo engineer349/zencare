@@ -3,6 +3,7 @@ using System.Net;
 using Twilio.Http;
 using System.Net.Mime;
 using System.Text;
+using Microsoft.VisualBasic;
 
 namespace Zencareservice.Models
 {
@@ -21,20 +22,18 @@ namespace Zencareservice.Models
                 message.Subject = Subject;
                 message.IsBodyHtml = true; 
                 message.Body = Mailbody;
-                //MailMessage mailMessage = new MailMessage("zenhealthcareservice@gmail.com",Email, "Autoverification", "Your Zencareservice signup Account OTP verification of Email is " + randomCode);
 
-                // Create an alternate view with HTML content
+                //AlternateView htmlView = AlternateView.CreateAlternateViewFromString(Mailbody, null, "~/forms/termsofservice.html");
 
-                //using (System.IO.StreamReader reader = new System.IO.StreamReader("wwwroot/code/SubjectMail.html"))
-                //{
-                //    htmlContent = reader.ReadToEnd();
-                //}
-                //Random random = new Random();
+                // Load the HTML file and embed the image
+                //LinkedResource imageResource = new LinkedResource(imagePath, "~/image/jpeg");
+                //imageResource.ContentId = Guid.NewGuid().ToString(); // Content-ID for the image
 
- 
+                // Embed the image in the HTML view
+                //htmlView.LinkedResources.Add(imageResource);
 
-              //AlternateView htmlView = AlternateView.CreateAlternateViewFromString(htmlContent, Encoding.UTF8, MediaTypeNames.Text.Html);
-               //message.AlternateViews.Add(htmlView);
+                // Attach the HTML view to the email
+                //message.AlternateViews.Add(htmlView);
 
                 using (SmtpClient smtpClient = new SmtpClient())
                 {
@@ -43,11 +42,9 @@ namespace Zencareservice.Models
                     smtpClient.EnableSsl = true;
                     smtpClient.UseDefaultCredentials = false;
                     smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    smtpClient.Credentials = new NetworkCredential(From, Pass);
-                   
+                    smtpClient.Credentials = new NetworkCredential(From, Pass);                  
                     smtpClient.Send(message);
-
-                    
+  
                   
                 }
 
@@ -55,7 +52,7 @@ namespace Zencareservice.Models
             catch (Exception ex)
             {
                 throw ex;
-             
+            
 
             }
             return ("Success");
