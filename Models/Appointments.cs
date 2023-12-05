@@ -1,7 +1,7 @@
 ﻿namespace Zencareservice.Models
 {
     public class Appointments
-    {
+    {   
         public int AptId {  get; set; }
 
         public string ? DoctorName { get; set; }

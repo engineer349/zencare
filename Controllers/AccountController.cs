@@ -151,9 +151,7 @@ namespace Zencareservice.Controllers
                 TempData["ResetData"] = ResetEmail;
                 string generatedCode = Codegenerator();
                 _generatedOtp = Convert.ToInt32(generatedCode);
-                SendMail sendMail = new SendMail();
-                SmtpClient client = new SmtpClient();
-                SendMail.EmailSend("zenhealthcareservice@gmail.com", obj.Email, "lamubclwmhfjwjjs", "Autoverification", "Your Zencareservice signup Account OTP verification of Email is "+ +_generatedOtp, "smtp.gmail.com", 587);
+
                 return RedirectToAction("Login", "Account");
             }
 
