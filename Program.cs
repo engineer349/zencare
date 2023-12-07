@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Zencareservice.Data;
 
 
@@ -15,6 +16,16 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddDataProtection();
 //builder.Services.AddDbContext<DbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnStr")));
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login"; // Redirect to login page if not authenticated
+        options.AccessDeniedPath = "/Account/AccessDenied"; // Redirect to access denied page if not authorized
+    });
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(1); // Set the session timeout to 1 minute
+});
 var app = builder.Build();
 
 //// Configure the HTTP request pipeline.
@@ -25,7 +36,6 @@ if (!app.Environment.IsDevelopment())
    app.UseHsts();
 }
 app.UseSession();
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCookiePolicy();
@@ -36,7 +46,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "default",
-       pattern: "{controller=Home}/{action=Index}/{id?}");
+       pattern: "{controller=Appointments}/{action=Aptcrt}/{id?}");
 
 
 });

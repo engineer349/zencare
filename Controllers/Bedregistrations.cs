@@ -8,7 +8,9 @@ namespace Zencareservice.Controllers
         {
             return View();
         }
-        public IActionResult Bedregedit()
+
+       
+    public IActionResult Bedregedit()
         {
             return View();
         }

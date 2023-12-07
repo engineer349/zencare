@@ -10,11 +10,14 @@
 
 <!Doctype html>  
 
+   
+
 <html lang="en">
     <head>
 
-    <meta charset="UTF-8">
+ 
 
+    <meta charset="UTF-8">
 
     <title>Verify Otp</title>
 
@@ -118,7 +121,7 @@
                 <div class="card p-2 text-center">
                     <h6>Please enter the one time password <br> to verify your account</h6> 
                 <div> <span>A code has been sent to</span> 
-                    <small>@ViewData["email"]</small> 
+                    <small>@ViewBag.Message</small> 
                     </div>
                     <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
 
@@ -131,7 +134,7 @@
  
                     </div> 
                     <div class="mt-4">
-                    <button class="btn btn-danger px-4 validate" asp-action="ValidateOtp" asp-controller="Account">Validate</button>
+                    <button class="btn btn-danger px-4 validate" asp-action="ValidateOtp" asp-controller="Account" onclick="validateForm()">Validate</button>
                      </div> 
                      </div> 
                      <div class="card-2"> 
@@ -142,9 +145,10 @@
                      </div>
         </div>
        </form>
+    <script type="text/javascript">
+            var messagefromcontroller = '@ViewBag.Message';
+            alert(messagefromcontroller);
+            var pageExpiration = HttpContext.Session.GetString("AccessDenied")';
+    </script>
     </body>
-    
-
-    
-    
     </html>

@@ -14,7 +14,8 @@ namespace Zencareservice.Models
         [Required]
         public string Password { get; set; }
 
-        
+
+        public string Email { get; set; }
         public string CRPassword { get; set; }
     }
 }

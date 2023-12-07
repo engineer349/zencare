@@ -77,8 +77,7 @@
                             <div class="form-group">                     
                                <select id="roleDropdown" name="RoleId" asp-items="ViewBag.Roles" class="form-control">
                                     <option value="">-- Select Role --</option>
-                                </select>   
-                               
+                                </select>                                  
                             </div>
                             <div>
                                 <span>@ViewBag.Message</span>
@@ -212,6 +211,15 @@
             return false;
         }
 
+        var lastname = document.getElementById("lastname").value.trim();
+        if (lastname === "") {
+            swal(Last name cannot be empty.");
+            return false;
+        }
+        if (!/^[a-zA-Z]{4,16}$/.test(lastname)) {
+            swal("Last name must contain only letters and be between 4 and 16 characters.");
+            return false;
+        }
         // Validate Password
         var password = document.getElementById("pass").value.trim();
         if (password === "") {

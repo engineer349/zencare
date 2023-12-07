@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Zencareservice.Controllers
 {
@@ -9,6 +10,7 @@ namespace Zencareservice.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Prescrt()
         {
 

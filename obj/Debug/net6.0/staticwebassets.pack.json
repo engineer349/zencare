@@ -521,6 +521,10 @@
       "PackagePath": "staticwebassets\\code\\SubjectMail.html"
     },
     {
+      "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\Profile.css",
+      "PackagePath": "staticwebassets\\css\\Profile.css"
+    },
+    {
       "Id": "D:\\Projects\\Zencareservice\\wwwroot\\css\\Verifyotp.css",
       "PackagePath": "staticwebassets\\css\\Verifyotp.css"
     },

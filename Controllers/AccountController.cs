@@ -36,7 +36,6 @@ namespace Zencareservice.Controllers
         public IActionResult Index()
         {
        
-
             ViewBag.Message = "Your Details are successfully saved!";
 
             return View("RegistrationSuccess", "Account");
@@ -48,13 +47,14 @@ namespace Zencareservice.Controllers
 
         public IActionResult VerifyOtp()
         {
-         
+            HttpContext.Session.SetString("AccessDenied", DateTime.Now.AddMinutes(1).ToString());
             return View();
         }
 
      
         public IActionResult ValidateOtp(Signup model)
         {
+           
 
             StringBuilder stringBuilder = new StringBuilder();
 
@@ -77,7 +77,22 @@ namespace Zencareservice.Controllers
                 if (Convert.ToInt64(enteredOtp) == Convert.ToInt64(_genotp))
                 {
                     
-                    return RedirectToAction("Index", "Account");
+                    ViewBag.Message = "SuccessfullyValidated";   
+                    
+                    return RedirectToAction("Login","Account");
+
+                }
+                else
+                {
+                    ViewBag.Message = "You entered Wrong PIN";
+
+                    string returnUrl = "/VerifyOtp";
+
+                    ViewData["ReturnUrl"] = returnUrl;
+
+                    
+
+                    return RedirectToAction(returnUrl);
                 }
               
             }
@@ -165,6 +180,7 @@ namespace Zencareservice.Controllers
 
         public IActionResult Login() 
         {
+            ViewBag.Message = "Your LoginPage is loaded";
             return View();
         }
        
@@ -258,6 +274,7 @@ namespace Zencareservice.Controllers
         public IActionResult Register(Signup Obj, string returnUrl)
         {
             ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
+
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             {
                
@@ -275,7 +292,7 @@ namespace Zencareservice.Controllers
 
                             try
                             {
-                               
+                              
                                 string SelectedRoleId = Obj.RoleId;                            
                                 int agreeterms = Convert.ToInt32(Obj.agreeterm);
                                 string fname = Obj.Firstname;
@@ -375,15 +392,23 @@ namespace Zencareservice.Controllers
 
                                 if (mail == "Success")
                                 {
-                                    DataAccess Obj_DataAccess = new DataAccess();
-                                    DataSet ds = new DataSet();
-                                    ds = Obj_DataAccess.SaveRegister(Obj);
-
 
                                     return RedirectToAction("VerifyOtp", "Account");
+                                
+                                }
+                                if (ViewBag.Message = "SuccessfullyValidated")
+                                {
+                                        DataAccess Obj_DataAccess = new DataAccess();
+                                        DataSet ds = new DataSet();
+                                        ds = Obj_DataAccess.SaveRegister(Obj);
+
                                 }
 
-                            }
+                                return View();
+                              
+                                }
+
+                            
                             catch (Exception ex)
                             {
                                 string msg = ex.Message.ToString();

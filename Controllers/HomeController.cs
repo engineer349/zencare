@@ -17,6 +17,10 @@ namespace Zencareservice.Controllers
         {
             return View();
         }
+        public IActionResult Profile()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();
@@ -32,11 +36,7 @@ namespace Zencareservice.Controllers
             return View();
         }
 
-        public IActionResult Appointments()
-        {
-
-            return View();
-        }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

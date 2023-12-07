@@ -4,7 +4,7 @@ using System.Data;
 using Zencareservice.Data;
 using System.Xml.Linq;
 using Zencareservice.Models;
-
+using Zencareservice.Controllers;
 
 namespace Zencareservice.Repository
 {
@@ -60,6 +60,61 @@ namespace Zencareservice.Repository
 
         }
 
+        public DataSet SaveAppointment(Appts Obj)
+        {
+
+            try
+            {
+                DataSet ds = new DataSet();
+                string StrSPName = "AppointmentBooking_SP";
+
+                SqlParameter[] param = new SqlParameter[15];
+
+                param[0] = new SqlParameter("@PatientFirstname", SqlDbType.NVarChar);
+                param[0].Value = Obj.PatientFirstName;
+                param[1] = new SqlParameter("@PatientLastname", SqlDbType.NVarChar);
+                param[1].Value = Obj.PatientLastName;
+                param[2] = new SqlParameter("@PatientEmail", SqlDbType.NVarChar);
+                param[2].Value = "vdgopisrinivasan@gmail.com";
+                param[3] = new SqlParameter("@DoctorFirstname", SqlDbType.NVarChar);
+                param[3].Value = Obj.DoctorFirstName;
+                param[4] = new SqlParameter("@DoctorLastname", SqlDbType.NVarChar);
+                param[4].Value = Obj.DoctorLastName;
+                param[5] = new SqlParameter("@Patgender", SqlDbType.NVarChar);
+                param[5].Value = Obj.PatientGender;
+                param[6] = new SqlParameter("@AptBookdate", SqlDbType.Date);
+                param[6].Value = Obj.AptBookingDate;
+                param[7] = new SqlParameter("@AptTime", SqlDbType.Time);
+                param[7].Value = Obj.AptBookingTime;
+                param[8] = new SqlParameter("@PatientAddress1", SqlDbType.VarChar);
+                param[8].Value = Obj.PatientAddress1;
+                param[9] = new SqlParameter("@PatientAddress2", SqlDbType.VarChar);
+                param[9].Value = Obj.PatientAddress2;
+                param[10] = new SqlParameter("@PatientPhoneno", SqlDbType.VarChar);
+                param[10].Value = Obj.Patientphoneno; 
+                param[11] = new SqlParameter("@Patientage", SqlDbType.VarChar);
+                param[11].Value = Obj.PatientAge;
+                param[12] = new SqlParameter("@ReasonType", SqlDbType.VarChar);
+                param[12].Value = Obj.ReasonType;
+                param[13] = new SqlParameter("@PState", SqlDbType.VarChar);
+                param[13].Value = Obj.PState;
+                param[14] = new SqlParameter("@PCity", SqlDbType.VarChar);
+                param[14].Value = Obj.PCity;
+
+                ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
+
+                return ds;
+            }
+
+            catch (SqlException ex)
+            {
+                throw ex;
+
+            }
+
+
+        }
+
         public DataSet CheckEmail(Signup Obj)
         {
 
@@ -99,7 +154,8 @@ namespace Zencareservice.Repository
                 param[0].Value = Obj.Username;
                 param[1] = new SqlParameter("@Pass", SqlDbType.NVarChar);
                 param[1].Value = Obj.Password;
-                
+
+
                 ds = Obj_SqlDataAccess.GetDataWithParamStoredprocedure(StrSPName, param);
 
                 return ds;

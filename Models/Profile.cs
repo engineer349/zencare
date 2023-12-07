@@ -19,10 +19,12 @@
 
         public string Username { get; set; }
 
-        public DateTime Dob { get; set; }
+        public DateOnly Dob { get; set; }
 
         public string Phoneno { get; set; }
 
+        public string AltPhoneno { get; set; }
+        
         public string Address1 { get; set; }
 
         public string Address2 { get; set; }
@@ -33,7 +35,9 @@
 
         public string Country { get; set; }
 
-        public string zip { get; set; }
+        public string Zipcode { get; set; }
+
+        public string Uniqueid { get; set; }
 
         public string Status { get; set; }
 
