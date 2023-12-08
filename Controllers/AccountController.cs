@@ -17,6 +17,7 @@ using System.Text.RegularExpressions;
 using System.Data.Entity.Infrastructure;
 using System.Globalization;
 using System.CodeDom.Compiler;
+using System.Xml.Linq;
 
 namespace Zencareservice.Controllers
 {
@@ -311,12 +312,70 @@ namespace Zencareservice.Controllers
 
                                     string generatedCode = Codegenerator();
                                     _generatedOtp = Convert.ToInt32(generatedCode);
+                                    
+                                 
+                                }
+                               
+                                    SendingEmail(Obj);
+                            
+                              
+                                    DataAccess Obj_DataAccess = new DataAccess();
+                                    DataSet ds = new DataSet();
+                                    ds = Obj_DataAccess.SaveRegister(Obj);
+
+                                    return RedirectToAction("VerifyOtp", "Account");
+                                
+                                    
+
+                              
                                 }
 
-                                SendMail sendMail = new SendMail();
-                                SmtpClient client = new SmtpClient();
+                            
+                            catch (Exception ex)
+                            {
+                                string msg = ex.Message.ToString();
+                                ViewBag.Message = msg;
+                            }
+                        }
+                        else
+                        {
+                            TempData["Email"] = "InvalidUser";
+                            return View();
 
-                                string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", Obj.Email, "lamubclwmhfjwjjs", "Autoverification", $@"
+                        }
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(nameof(Signup.agreeterm), "Pls  agree to terms of service and condition.");
+                    }
+
+                }
+                else
+                {
+                    ModelState.AddModelError(nameof(Signup.Dob), "User must be at least 18 years old.");
+                }
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
+      
+            return View();
+              
+
+        }
+
+        private string SendingEmail(Signup Obj)
+        {
+            string FName = Obj.Firstname;
+            SendMail sendMail = new SendMail();
+            SmtpClient client = new SmtpClient();
+
+            string mail = sendMail.EmailSend("zenhealthcareservice@gmail.com", Obj.Email, "lamubclwmhfjwjjs", "Autoverification", $@"
 
 
 
@@ -380,7 +439,7 @@ namespace Zencareservice.Controllers
                             <img src=""~/images/zencare-logo1.png"" alt=""Your Logo"" class=""logo"">
                             <div class=""verification-container"">
         
-                                <h2>Hi {fname},</p>
+                                <h2>Hi {FName},</p>
                                 <p>Thank you for using Zenhealthcareservice! </p>
                                 <p>To ensure the security of your account, we have generated a One-Time Password (OTP) for you.</p>
                                 <p class=""verification-code"">Your Verification Code:{_generatedOtp}</p>
@@ -389,65 +448,9 @@ namespace Zencareservice.Controllers
                             </div>
                         </body>
                         </html>", "smtp.gmail.com", 587);
-
-                                if (mail == "Success")
-                                {
-
-                                    return RedirectToAction("VerifyOtp", "Account");
-                                
-                                }
-                                if (ViewBag.Message = "SuccessfullyValidated")
-                                {
-                                        DataAccess Obj_DataAccess = new DataAccess();
-                                        DataSet ds = new DataSet();
-                                        ds = Obj_DataAccess.SaveRegister(Obj);
-
-                                }
-
-                                return View();
-                              
-                                }
-
-                            
-                            catch (Exception ex)
-                            {
-                                string msg = ex.Message.ToString();
-                                ViewBag.Message = msg;
-                            }
-                        }
-                        else
-                        {
-                            TempData["Email"] = "InvalidUser";
-                            return View();
-
-                        }
-
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(nameof(Signup.agreeterm), "Pls  agree to terms of service and condition.");
-                    }
-
-                }
-                else
-                {
-                    ModelState.AddModelError(nameof(Signup.Dob), "User must be at least 18 years old.");
-                }
-            }
-
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-
-      
-            return View();
-              
+            return mail;
 
         }
-
-
         public IActionResult RegistrationSuccess()
         {
             return View();

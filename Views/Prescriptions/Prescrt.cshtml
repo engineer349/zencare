@@ -5,7 +5,7 @@
     Layout = "_AdminLayout";
     ViewData["Title"] = "CreatePrescriptions";
 }
-@model Zencareservice.Models.Prescriptions;
+@model Zencareservice.Models.Prescs;
 <h3>PrescriptionDetails</h3>
 <html>
 <head>
@@ -14,15 +14,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <form asp-action="Prescrt">
+    <form asp-action="Prescrt" asp-controller="Prescriptions">
         <div class="form-row">
-            <div class="form-group col-md-6">
-                <label asp-for="DoctorName">DoctorName</label>
-                <input type="text" asp-for="DoctorName" class="form-control" id="patientname" placeholder="DoctorName">
-                <span asp-validation-for="DoctorName" class="text-danger"></span>
+            <div class="form-group col-md-3">
+                <label asp-for="DoctorFirstName">DoctorFirstName</label>
+                <input type="text" asp-for="DoctorFirstName" class="form-control" id="patientname" placeholder="DoctorName">
+                <span asp-validation-for="DoctorFirstName" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
-                <label asp-for="PatientFirstName">PatientName</label>
+                <label asp-for="DoctorLastName">DoctorLastName</label>
+                <input type="text" asp-for="DoctorLastName" class="form-control" id="patientname" placeholder="DoctorName">
+                <span asp-validation-for="DoctorLastName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="PatientFirstName">PatientFirstName</label>
                 <input type="text" asp-for="PatientFirstName" class="form-control" id="lastname" placeholder="PatientFirstName">
                 <span asp-validation-for="PatientFirstName" class="text-danger"></span>
             </div>
@@ -39,19 +44,19 @@
                 <span asp-validation-for="PatientAge" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
-                <label asp-for="PatientContactNo">ContactNo</label>
-                <input asp-for="PatientContactNo" type="tel" class="form-control" id="phoneno" placeholder="ContactNo">
-                <span asp-validation-for="PatientContactNo" class="text-danger"></span>
+                <label asp-for="PatientPhoneno">ContactNo</label>
+                <input asp-for="PatientPhoneno" type="tel" class="form-control" id="phoneno" placeholder="ContactNo">
+                <span asp-validation-for="PatientPhoneno" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="Gender">Gender</label>
-                <select asp-for="Gender" name="BedType" id="gender" class="form-control">
+                <label asp-for="PatientGender">Gender</label>
+                <select asp-for="PatientGender" name="BedType" id="gender" class="form-control">
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Transgender">Transgender</option>
                 </select>
 
-                <span asp-validation-for="Gender" class="text-danger"></span>
+                <span asp-validation-for="PatientGender" class="text-danger"></span>
                 
             </div>
         </div>
@@ -71,6 +76,38 @@
                 <label asp-for="PrescriptionDetail">Prescription Details</label>
                 <input asp-for="PrescriptionDetail" type="text" class="form-control" id="prescriptiondetails">
                 <span asp-validation-for="PrescriptionDetail" class="text-danger"></span>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@@mdo">Open modal for @@mdo</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@@fat">Open modal for @@fat</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@@getbootstrap">Open modal for @@getbootstrap</button>
+
+        <div class="modal fade example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg " role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Recipient:</label>
+                                <input type="text" class="form-control" id="recipient-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Message:</label>
+                                <textarea class="form-control" id="message-text"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Send message</button>
+                    </div>
+                </div>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>

@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.CodeDom;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Zencareservice.Data
@@ -31,7 +32,7 @@ namespace Zencareservice.Data
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             finally
             {

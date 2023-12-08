@@ -46,7 +46,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "default",
-       pattern: "{controller=Appointments}/{action=Aptcrt}/{id?}");
+       pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
 });

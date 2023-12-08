@@ -1,4 +1,12 @@
-D:\Projects\Zencareservice\bin\Debug\net6.0\EntityFramework.dll
+D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.csproj.AssemblyReference.cache
+D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.AssemblyInfoInputs.cache
+D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.AssemblyInfo.cs
+D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.csproj.CoreCompileInputs.cache
+D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.MvcApplicationPartsAssemblyInfo.cs
+D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.MvcApplicationPartsAssemblyInfo.cache
+D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.RazorAssemblyInfo.cache
+D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.RazorAssemblyInfo.cs
 D:\Projects\Zencareservice\bin\Debug\net6.0\appsettings.Development.json
 D:\Projects\Zencareservice\bin\Debug\net6.0\appsettings.json
 D:\Projects\Zencareservice\bin\Debug\net6.0\Zencareservice.staticwebassets.runtime.json
@@ -8,6 +16,7 @@ D:\Projects\Zencareservice\bin\Debug\net6.0\Zencareservice.runtimeconfig.json
 D:\Projects\Zencareservice\bin\Debug\net6.0\Zencareservice.dll
 D:\Projects\Zencareservice\bin\Debug\net6.0\Zencareservice.pdb
 D:\Projects\Zencareservice\bin\Debug\net6.0\EntityFramework.SqlServer.dll
+D:\Projects\Zencareservice\bin\Debug\net6.0\EntityFramework.dll
 D:\Projects\Zencareservice\bin\Debug\net6.0\Humanizer.dll
 D:\Projects\Zencareservice\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 D:\Projects\Zencareservice\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
@@ -49,15 +58,6 @@ D:\Projects\Zencareservice\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp2.1\Syst
 D:\Projects\Zencareservice\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 D:\Projects\Zencareservice\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\Projects\Zencareservice\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
-D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.csproj.AssemblyReference.cache
-D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.GeneratedMSBuildEditorConfig.editorconfig
-D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.AssemblyInfoInputs.cache
-D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.AssemblyInfo.cs
-D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.csproj.CoreCompileInputs.cache
-D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.MvcApplicationPartsAssemblyInfo.cs
-D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.MvcApplicationPartsAssemblyInfo.cache
-D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.RazorAssemblyInfo.cache
-D:\Projects\Zencareservice\obj\Debug\net6.0\Zencareservice.RazorAssemblyInfo.cs
 D:\Projects\Zencareservice\obj\Debug\net6.0\staticwebassets\msbuild.Zencareservice.Microsoft.AspNetCore.StaticWebAssets.props
 D:\Projects\Zencareservice\obj\Debug\net6.0\staticwebassets\msbuild.build.Zencareservice.props
 D:\Projects\Zencareservice\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.Zencareservice.props

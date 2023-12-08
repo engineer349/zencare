@@ -140,6 +140,25 @@ namespace Zencareservice.Repository
            
         }
 
+        public DataSet GetProfile()
+        {
+
+            try
+            {
+                DataSet ds = new DataSet();
+                string StrSPName = "GetAllPersonalDetails";
+
+                ds = Obj_SqlDataAccess.GetDataWithStoredprocedure(StrSPName);
+
+                return ds;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+
+        }
         public DataSet SaveLogin(Login Obj)
         {
 
